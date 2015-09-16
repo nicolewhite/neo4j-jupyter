@@ -6,13 +6,13 @@
     </head>
     <body>
 
-    <div id="b6e91fb5-0503-4905-88f5-cf218959bad0"></div>
+    <div id="f4f75988-76ee-45bd-9424-84141fcedfdf"></div>
 
     <script type="text/javascript">
-      var nodes = [{"group": "Person", "id": "Nicole", "label": "Nicole"}, {"group": "Drink", "id": "Mountain Dew", "label": "Mountain Dew"}, {"group": "Person", "id": "Drew", "label": "Drew"}, {"group": "Drink", "id": "Coke Zero", "label": "Coke Zero"}];
-      var edges = [{"to": "Mountain Dew", "from": "Nicole", "label": "LIKES"}, {"to": "Drew", "from": "Nicole", "label": "KNOWS"}, {"to": "Coke Zero", "from": "Nicole", "label": "LIKES"}, {"to": "Mountain Dew", "from": "Drew", "label": "LIKES"}];
+      var nodes = [{"group": "Person", "id": "Nicole", "label": "Nicole"}, {"group": "Person", "id": "Drew", "label": "Drew"}, {"group": "Drink", "id": "Mountain Dew", "label": "Mountain Dew"}, {"group": "Drink", "id": "Coke Zero", "label": "Coke Zero"}, {"group": "Manufacturer", "id": "Coca Cola", "label": "Coca Cola"}, {"group": "Manufacturer", "id": "Pepsi", "label": "Pepsi"}];
+      var edges = [];
 
-      var container = document.getElementById("b6e91fb5-0503-4905-88f5-cf218959bad0");
+      var container = document.getElementById("f4f75988-76ee-45bd-9424-84141fcedfdf");
       
       var data = {
         nodes: nodes,
@@ -35,7 +35,8 @@
               color: 'gray',
               arrows: {
                   to: {enabled: true, scaleFactor: 0.5}
-              }
+              },
+              smooth: {enabled: false}
           },
           physics: {
               enabled: false

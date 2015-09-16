@@ -6,13 +6,13 @@
     </head>
     <body>
 
-    <div id="873bde25-b9c5-4d6b-bb86-0d197857df0c"></div>
+    <div id="20c504da-96e5-4f0b-8dcc-ff723ae4fa02"></div>
 
     <script type="text/javascript">
-      var nodes = [{"group": "Person", "id": "Nicole", "label": "Nicole"}, {"group": "Person", "id": "Drew", "label": "Drew"}, {"group": "Drink", "id": "Mountain Dew", "label": "Mountain Dew"}, {"group": "Drink", "id": "Coke Zero", "label": "Coke Zero"}];
-      var edges = [];
+      var nodes = [{"group": "Person", "id": "Nicole", "label": "Nicole"}, {"group": "Drink", "id": "Mountain Dew", "label": "Mountain Dew"}, {"group": "Drink", "id": "Coke Zero", "label": "Coke Zero"}, {"group": "Person", "id": "Drew", "label": "Drew"}, {"group": "Manufacturer", "id": "Coca Cola", "label": "Coca Cola"}, {"group": "Manufacturer", "id": "Pepsi", "label": "Pepsi"}];
+      var edges = [{"to": "Mountain Dew", "from": "Nicole", "label": "LIKES"}, {"to": "Coke Zero", "from": "Nicole", "label": "LIKES"}, {"to": "Mountain Dew", "from": "Drew", "label": "LIKES"}, {"to": "Coke Zero", "from": "Coca Cola", "label": "MAKES"}, {"to": "Mountain Dew", "from": "Pepsi", "label": "MAKES"}];
 
-      var container = document.getElementById("873bde25-b9c5-4d6b-bb86-0d197857df0c");
+      var container = document.getElementById("20c504da-96e5-4f0b-8dcc-ff723ae4fa02");
       
       var data = {
         nodes: nodes,
@@ -35,7 +35,8 @@
               color: 'gray',
               arrows: {
                   to: {enabled: true, scaleFactor: 0.5}
-              }
+              },
+              smooth: {enabled: false}
           },
           physics: {
               enabled: false

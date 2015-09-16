@@ -79,7 +79,8 @@ def draw(graph, options):
               color: 'gray',
               arrows: {{
                   to: {{enabled: true, scaleFactor: 0.5}}
-              }}
+              }},
+              smooth: {{enabled: false}}
           }},
           physics: {{
               enabled: false

@@ -22,7 +22,15 @@ def draw(graph, options):
         prop_key = options[node_label]
         vis_label = node.properties[prop_key]
 
-        return {"id": vis_label, "label": vis_label, "group": node_label}
+        title = {}
+
+        for key, value in node.properties.items():
+            key = key.encode("utf8")
+            value = value.encode("utf8") if type(value) is unicode else value
+
+            title[key] = value
+
+        return {"id": vis_label, "label": vis_label, "group": node_label, "title": repr(title)}
 
     for row in data:
         source = row[0]

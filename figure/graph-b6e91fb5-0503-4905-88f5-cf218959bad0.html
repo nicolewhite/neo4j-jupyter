@@ -1,0 +1,50 @@
+
+    <html>
+    <head>
+      <script type="text/javascript" src="../lib/vis/dist/vis.js"></script>
+      <link href="../lib/vis/dist/vis.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+    <div id="b6e91fb5-0503-4905-88f5-cf218959bad0"></div>
+
+    <script type="text/javascript">
+      var nodes = [{"group": "Person", "id": "Nicole", "label": "Nicole"}, {"group": "Drink", "id": "Mountain Dew", "label": "Mountain Dew"}, {"group": "Person", "id": "Drew", "label": "Drew"}, {"group": "Drink", "id": "Coke Zero", "label": "Coke Zero"}];
+      var edges = [{"to": "Mountain Dew", "from": "Nicole", "label": "LIKES"}, {"to": "Drew", "from": "Nicole", "label": "KNOWS"}, {"to": "Coke Zero", "from": "Nicole", "label": "LIKES"}, {"to": "Mountain Dew", "from": "Drew", "label": "LIKES"}];
+
+      var container = document.getElementById("b6e91fb5-0503-4905-88f5-cf218959bad0");
+      
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      
+      var options = {
+          nodes: {
+              shape: 'dot',
+              size: 25,
+              font: {
+                  size: 14
+              }
+          },
+          edges: {
+              font: {
+                  size: 14,
+                  align: 'middle'
+              },
+              color: 'gray',
+              arrows: {
+                  to: {enabled: true, scaleFactor: 0.5}
+              }
+          },
+          physics: {
+              enabled: false
+          }
+      };
+      
+      var network = new vis.Network(container, data, options);
+
+    </script>
+    </body>
+    </html>
+    

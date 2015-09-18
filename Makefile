@@ -1,6 +1,6 @@
 slides:
-	jupyter nbconvert main.ipynb --to slides --post serve
+	jupyter nbconvert basics.ipynb --to slides --post serve
 
 html:
-	jupyter nbconvert main.ipynb
-	open main.html
+	jupyter nbconvert basics.ipynb
+	open basics.html

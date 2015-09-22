@@ -1,6 +1,6 @@
 slides:
-	jupyter nbconvert basics.ipynb --to slides --post serve
-
+	jupyter nbconvert hello-world.ipynb twitter.ipynb --to slides && python -m SimpleHTTPServer
+	
 html:
-	jupyter nbconvert basics.ipynb
-	open basics.html
+	jupyter nbconvert main.ipynb hello-world.ipynb twitter.ipynb
+	open main.html

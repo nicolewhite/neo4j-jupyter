@@ -2,54 +2,7 @@ from IPython.display import IFrame
 import json
 import uuid
 
-def draw(graph, options):
-    # This will draw your ENTIRE GRAPH; be careful! It's intended to be used with small, example datasets.
-    # The options argument should be a dictionary of node labels and property keys; it determines which property 
-    # is displayed for the node label. For example, in the movie graph, options = {"Movie": "title", "Person": "name"}.
-    query = """
-    MATCH n
-    OPTIONAL MATCH (n)-[r]->(m)
-    RETURN n, r, m
-    """
-
-    data = graph.cypher.execute(query)
-
-    nodes = []
-    edges = []
-
-    def get_vis_info(node):
-        node_label = list(node.labels)[0]
-        prop_key = options[node_label]
-        vis_label = node.properties[prop_key]
-
-        title = {}
-
-        for key, value in node.properties.items():
-            key = key.encode("utf8")
-            value = value.encode("utf8") if type(value) is unicode else value
-
-            title[key] = value
-
-        return {"id": vis_label, "label": vis_label, "group": node_label, "title": repr(title)}
-
-    for row in data:
-        source = row[0]
-        rel = row[1]
-        target = row[2]
-
-        source_info = get_vis_info(source)
-
-        if source_info not in nodes:
-            nodes.append(source_info)
-
-        if rel:
-            target_info = get_vis_info(target)
-
-            if target_info not in nodes:
-                nodes.append(target_info)
-
-            edges.append({"from": source_info["id"], "to": target_info["id"], "label": rel.type})
-            
+def vis_network(nodes, edges, physics=False):
     html = """
     <html>
     <head>
@@ -91,7 +44,7 @@ def draw(graph, options):
               smooth: {{enabled: false}}
           }},
           physics: {{
-              enabled: false
+              enabled: {physics}
           }}
       }};
       
@@ -103,7 +56,7 @@ def draw(graph, options):
     """
 
     unique_id = str(uuid.uuid4())
-    html = html.format(id=unique_id, nodes=json.dumps(nodes), edges=json.dumps(edges))
+    html = html.format(id=unique_id, nodes=json.dumps(nodes), edges=json.dumps(edges), physics=json.dumps(physics))
     
     filename = "figure/graph-{}.html".format(unique_id)
 
@@ -111,4 +64,57 @@ def draw(graph, options):
     file.write(html)
     file.close()
 
-    return IFrame(filename, width="500", height="300")
+    return IFrame(filename, width="100%", height="400")
+
+def draw(graph, options, physics=False, limit=100):
+    # The options argument should be a dictionary of node labels and property keys; it determines which property 
+    # is displayed for the node label. For example, in the movie graph, options = {"Movie": "title", "Person": "name"}.
+    # Omitting a node label from the options dict will leave the node unlabeled in the visualization.
+    # Setting physics = True makes the nodes bounce around when you touch them!
+    query = """
+    MATCH n
+    OPTIONAL MATCH (n)-[r]->(m)
+    RETURN n, r, m 
+    LIMIT {limit}
+    """
+
+    data = graph.cypher.execute(query, limit=limit)
+
+    nodes = []
+    edges = []
+
+    def get_vis_info(node):
+        node_label = list(node.labels)[0]
+        prop_key = options.get(node_label)
+        vis_label = node.properties.get(prop_key, "")
+        vis_id = node.ref.split("/")[1]
+
+        title = {}
+
+        for key, value in node.properties.items():
+            key = key.encode("utf8")
+            value = value.encode("utf8") if type(value) is unicode else value
+
+            title[key] = value
+
+        return {"id": vis_id, "label": vis_label, "group": node_label, "title": repr(title)}
+
+    for row in data:
+        source = row[0]
+        rel = row[1]
+        target = row[2]
+
+        source_info = get_vis_info(source)
+
+        if source_info not in nodes:
+            nodes.append(source_info)
+
+        if rel:
+            target_info = get_vis_info(target)
+
+            if target_info not in nodes:
+                nodes.append(target_info)
+
+            edges.append({"from": source_info["id"], "to": target_info["id"], "label": rel.type})
+
+    return vis_network(nodes, edges, physics=physics)

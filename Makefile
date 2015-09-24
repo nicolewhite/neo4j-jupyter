@@ -3,4 +3,5 @@ slides:
 	
 html:
 	jupyter nbconvert main.ipynb hello-world.ipynb twitter.ipynb
-	open main.html
+	mv hello-world.html build
+	mv twitter.html build

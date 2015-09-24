@@ -191,7 +191,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">scripts.vis</span> <span class="kn">import</span> <span class="n">draw</span>
@@ -211,14 +211,14 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
         <iframe
             width="100%"
             height="400"
-            src="figure/graph-909dd42a-3b18-4f0c-9741-bebd8aa51701.html"
+            src="figure/graph-27b43ac1-63f2-4c2f-ba56-7f176c7babf4.html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -243,7 +243,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">load_ext</span> cypher
@@ -252,6 +252,21 @@ div#notebook {
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The cypher extension is already loaded. To reload it, use:
+  %reload_ext cypher
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -268,7 +283,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">result</span> <span class="o">=</span> <span class="o">%</span><span class="k">cypher</span> MATCH (hashtag:Hashtag)-[:TAGS]-&gt;(tweet:Tweet) \
@@ -294,7 +309,7 @@ div#notebook {
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -345,7 +360,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">([</span><span class="n">Bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;hashtag&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;tweets&quot;</span><span class="p">])])</span>
@@ -679,7 +694,7 @@ EBB4jQECBAgQIECAAIGqBf4PLLiABTNiWsEAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">result</span> <span class="o">=</span> <span class="o">%</span><span class="k">cypher</span> MATCH (tweet:Tweet) \
@@ -707,7 +722,7 @@ EBB4jQECBAgQIECAAIGqBf4PLLiABTNiWsEAAAAASUVORK5CYII=
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -758,7 +773,7 @@ EBB4jQECBAgQIECAAIGqBf4PLLiABTNiWsEAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">hashtags</span> <span class="o">=</span> <span class="n">Histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;hashtags&quot;</span><span class="p">],</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Hashtags&quot;</span><span class="p">)</span>
@@ -1119,7 +1134,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">igraph</span> <span class="kn">import</span> <span class="n">Graph</span> <span class="k">as</span> <span class="n">IGraph</span>
@@ -1130,7 +1145,6 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <span class="s">&quot;&quot;&quot;</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
 
 <span class="n">ig</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">TupleList</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">ig</span>
@@ -1144,11 +1158,11 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;igraph.Graph at 0x10d412ce8&gt;</pre>
+<pre>&lt;igraph.Graph at 0x10ff61ce8&gt;</pre>
 </div>
 
 </div>
@@ -1170,7 +1184,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">betweenness</span><span class="p">())</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">ig</span><span class="o">.</span><span class="n">vs</span><span class="p">]</span>
@@ -1186,7 +1200,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1214,7 +1228,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
@@ -1225,9 +1239,8 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <span class="s">&quot;&quot;&quot;</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-<span class="n">tup</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
 
-<span class="n">ig</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">TupleList</span><span class="p">(</span><span class="n">tup</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ig</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">TupleList</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">ig</span>
 </pre></div>
 
@@ -1239,11 +1252,11 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;igraph.Graph at 0x10dd19430&gt;</pre>
+<pre>&lt;igraph.Graph at 0x110866908&gt;</pre>
 </div>
 
 </div>
@@ -1263,7 +1276,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">clusters</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">community_walktrap</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s">&quot;weight&quot;</span><span class="p">)</span>
@@ -1279,7 +1292,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1294,7 +1307,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]))</span>
@@ -1310,7 +1323,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1329,7 +1342,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
@@ -1347,7 +1360,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1366,7 +1379,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">edges</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;from&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;to&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
@@ -1381,7 +1394,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1400,7 +1413,7 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">scripts.vis</span> <span class="kn">import</span> <span class="n">vis_network</span>
@@ -1415,14 +1428,14 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
         <iframe
             width="100%"
             height="400"
-            src="figure/graph-f552e397-07dc-414b-86be-93f00563c776.html"
+            src="figure/graph-9063e073-f51f-46ca-bf9b-279f10c519a9.html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -1445,6 +1458,382 @@ gAABAgQIFBQQeAtiKkWAAAECBAgQIFB/AgJv/c2JMyJAgAABAgQIECgoIPAWxFSKAAECBAgQIECg
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Retweets-and-replies-structure">Retweets and replies structure<a class="anchor-link" href="#Retweets-and-replies-structure">&#182;</a></h1><p>Let's visualize (in 3D!) the structure of users retweeting and replying to other users.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">graph3d</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">MATCH (user1:User)-[:POSTS]-&gt;(:Tweet)-[:RETWEETS|REPLY_TO]-&gt;(:Tweet)&lt;-[:POSTS]-(user2:User)</span>
+<span class="s">RETURN ID(user1), ID(user2)</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">tup</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+<span class="n">graph3d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="graph-e28140bc-87df-4b15-a745-703b5ee0a7b3"></div>
+           <script type="text/javascript">
+           require.config({baseUrl: '/',
+                             paths: {igraph: ['nbextensions/igraph.min', 'https://rawgit.com/patrickfuller/igraph/master/js/build/igraph.min']}});
+           require(['igraph'], function () {
+               var $d = $('#graph-e28140bc-87df-4b15-a745-703b5ee0a7b3');
+               $d.width(600); $d.height(400);
+               $d.igraph = jQuery.extend({}, igraph);
+               $d.igraph.create($d, {nodeSize: 2.000000,
+                                     edgeSize: 0.250000,
+                                     defaultNodeColor: '0x5bc0de',
+                                     defaultEdgeColor: '0xaaaaaa',
+                                     shader: 'basic',
+                                     z: 100,
+                                     runOptimization: true,
+                                     directed: true});
+               $d.igraph.draw({
+    "edges": [
+        { "source": 57, "target": 58 },
+        { "source": 76, "target": 78 },
+        { "source": 87, "target": 88 },
+        { "source": 98, "target": 88 },
+        { "source": 151, "target": 152 },
+        { "source": 157, "target": 158 },
+        { "source": 172, "target": 173 },
+        { "source": 185, "target": 78 },
+        { "source": 189, "target": 22 },
+        { "source": 196, "target": 81 },
+        { "source": 196, "target": 81 },
+        { "source": 219, "target": 224 },
+        { "source": 196, "target": 81 },
+        { "source": 273, "target": 78 },
+        { "source": 338, "target": 52 },
+        { "source": 405, "target": 158 },
+        { "source": 350, "target": 349 },
+        { "source": 458, "target": 460 },
+        { "source": 463, "target": 460 },
+        { "source": 244, "target": 243 },
+        { "source": 507, "target": 61 },
+        { "source": 189, "target": 390 },
+        { "source": 189, "target": 460 },
+        { "source": 232, "target": 583 },
+        { "source": 665, "target": 395 },
+        { "source": 673, "target": 100 },
+        { "source": 695, "target": 698 },
+        { "source": 711, "target": 671 },
+        { "source": 752, "target": 58 },
+        { "source": 189, "target": 22 },
+        { "source": 787, "target": 583 },
+        { "source": 801, "target": 322 },
+        { "source": 903, "target": 754 },
+        { "source": 931, "target": 681 },
+        { "source": 906, "target": 905 },
+        { "source": 929, "target": 929 },
+        { "source": 975, "target": 322 },
+        { "source": 1002, "target": 989 },
+        { "source": 695, "target": 1011 },
+        { "source": 1053, "target": 991 },
+        { "source": 1079, "target": 1079 },
+        { "source": 1098, "target": 1099 },
+        { "source": 1150, "target": 1099 },
+        { "source": 1152, "target": 1099 },
+        { "source": 1172, "target": 311 },
+        { "source": 1175, "target": 1055 },
+        { "source": 1184, "target": 1099 },
+        { "source": 1186, "target": 1099 },
+        { "source": 1198, "target": 1099 },
+        { "source": 913, "target": 1099 },
+        { "source": 681, "target": 1099 },
+        { "source": 1214, "target": 1099 },
+        { "source": 1224, "target": 1099 },
+        { "source": 1269, "target": 1270 },
+        { "source": 1017, "target": 1018 },
+        { "source": 1327, "target": 1055 },
+        { "source": 1356, "target": 1035 },
+        { "source": 1461, "target": 1463 },
+        { "source": 695, "target": 81 },
+        { "source": 1492, "target": 1099 },
+        { "source": 1507, "target": 1099 },
+        { "source": 1511, "target": 1498 },
+        { "source": 1552, "target": 1553 },
+        { "source": 1601, "target": 913 },
+        { "source": 1645, "target": 1646 },
+        { "source": 1651, "target": 1099 },
+        { "source": 1667, "target": 1653 },
+        { "source": 1672, "target": 81 },
+        { "source": 1694, "target": 1498 },
+        { "source": 1718, "target": 322 },
+        { "source": 1765, "target": 1498 },
+        { "source": 1382, "target": 1381 },
+        { "source": 1756, "target": 1755 },
+        { "source": 1809, "target": 1382 },
+        { "source": 1382, "target": 1381 },
+        { "source": 695, "target": 1805 },
+        { "source": 1842, "target": 1824 },
+        { "source": 1091, "target": 1867 },
+        { "source": 1902, "target": 1900 },
+        { "source": 2023, "target": 1099 },
+        { "source": 2065, "target": 2009 },
+        { "source": 2091, "target": 58 },
+        { "source": 2104, "target": 1099 },
+        { "source": 787, "target": 2058 },
+        { "source": 2185, "target": 2186 },
+        { "source": 2189, "target": 2177 },
+        { "source": 2191, "target": 2177 },
+        { "source": 2208, "target": 2186 },
+        { "source": 2210, "target": 2177 },
+        { "source": 2177, "target": 2214 },
+        { "source": 2226, "target": 2227 },
+        { "source": 2245, "target": 2177 },
+        { "source": 2177, "target": 2227 },
+        { "source": 2249, "target": 2227 },
+        { "source": 2251, "target": 2252 },
+        { "source": 2256, "target": 2177 },
+        { "source": 2258, "target": 2177 },
+        { "source": 2258, "target": 2177 },
+        { "source": 2261, "target": 2252 },
+        { "source": 2177, "target": 2252 },
+        { "source": 2214, "target": 2266 },
+        { "source": 2261, "target": 2266 },
+        { "source": 2270, "target": 2266 },
+        { "source": 2177, "target": 2266 },
+        { "source": 2277, "target": 2278 },
+        { "source": 2278, "target": 2277 },
+        { "source": 2282, "target": 2177 },
+        { "source": 2284, "target": 2177 },
+        { "source": 2286, "target": 2177 },
+        { "source": 2288, "target": 2177 },
+        { "source": 2290, "target": 2177 },
+        { "source": 2292, "target": 2294 },
+        { "source": 2303, "target": 2294 },
+        { "source": 2231, "target": 2294 },
+        { "source": 2310, "target": 2310 },
+        { "source": 2310, "target": 2310 },
+        { "source": 2295, "target": 2294 },
+        { "source": 2325, "target": 2294 },
+        { "source": 2177, "target": 2294 },
+        { "source": 2230, "target": 2294 },
+        { "source": 2310, "target": 2177 },
+        { "source": 2215, "target": 2214 },
+        { "source": 2349, "target": 2351 },
+        { "source": 2355, "target": 2351 },
+        { "source": 2357, "target": 2177 },
+        { "source": 1904, "target": 2177 },
+        { "source": 2177, "target": 2389 },
+        { "source": 2392, "target": 2351 },
+        { "source": 2394, "target": 2351 },
+        { "source": 2396, "target": 2177 },
+        { "source": 2413, "target": 2351 },
+        { "source": 2415, "target": 2351 }
+    ],
+    "nodes": {
+        "22": { "location": [ -2.000, -2.000, -2.000 ] },
+        "52": { "location": [ -2.000, -2.000, -2.000 ] },
+        "57": { "location": [ -2.000, -2.000, -2.000 ] },
+        "58": { "location": [ -2.000, -2.000, -2.000 ] },
+        "61": { "location": [ -2.000, -2.000, -2.000 ] },
+        "76": { "location": [ -2.000, -2.000, -2.000 ] },
+        "78": { "location": [ -2.000, -2.000, -2.000 ] },
+        "81": { "location": [ -2.000, -2.000, -2.000 ] },
+        "87": { "location": [ -2.000, -2.000, -2.000 ] },
+        "88": { "location": [ -2.000, -2.000, -2.000 ] },
+        "98": { "location": [ -2.000, -2.000, -2.000 ] },
+        "100": { "location": [ -2.000, -2.000, -2.000 ] },
+        "151": { "location": [ -2.000, -2.000, -2.000 ] },
+        "152": { "location": [ -2.000, -2.000, -2.000 ] },
+        "157": { "location": [ -2.000, -2.000, -2.000 ] },
+        "158": { "location": [ -2.000, -2.000, -2.000 ] },
+        "172": { "location": [ -2.000, -2.000, -2.000 ] },
+        "173": { "location": [ -2.000, -2.000, -2.000 ] },
+        "185": { "location": [ -2.000, -2.000, -2.000 ] },
+        "189": { "location": [ -2.000, -2.000, -2.000 ] },
+        "196": { "location": [ -2.000, -2.000, -2.000 ] },
+        "219": { "location": [ -2.000, -2.000, -2.000 ] },
+        "224": { "location": [ -0.569, 1.619, -0.049 ] },
+        "232": { "location": [ 2.000, 1.963, 2.000 ] },
+        "243": { "location": [ 2.000, 2.000, 2.000 ] },
+        "244": { "location": [ 2.000, 2.000, 2.000 ] },
+        "273": { "location": [ -2.000, -2.000, -2.000 ] },
+        "311": { "location": [ 2.000, 2.000, 2.000 ] },
+        "322": { "location": [ 2.000, 2.000, 2.000 ] },
+        "338": { "location": [ 2.000, 2.000, 2.000 ] },
+        "349": { "location": [ 2.000, 2.000, 2.000 ] },
+        "350": { "location": [ 2.000, 2.000, 2.000 ] },
+        "390": { "location": [ 2.000, 2.000, 2.000 ] },
+        "395": { "location": [ 2.000, 2.000, 2.000 ] },
+        "405": { "location": [ 2.000, 2.000, 2.000 ] },
+        "458": { "location": [ 2.000, 2.000, 2.000 ] },
+        "460": { "location": [ 2.000, 2.000, 2.000 ] },
+        "463": { "location": [ -2.000, -2.000, -2.000 ] },
+        "507": { "location": [ 2.000, 2.000, 2.000 ] },
+        "583": { "location": [ -2.000, -2.000, -2.000 ] },
+        "665": { "location": [ -2.000, -2.000, -2.000 ] },
+        "671": { "location": [ -2.000, -2.000, -2.000 ] },
+        "673": { "location": [ -2.000, -2.000, -2.000 ] },
+        "681": { "location": [ -2.000, -2.000, -2.000 ] },
+        "695": { "location": [ -2.000, -2.000, -2.000 ] },
+        "698": { "location": [ -2.000, -2.000, -2.000 ] },
+        "711": { "location": [ -2.000, -2.000, -2.000 ] },
+        "752": { "location": [ 2.000, 2.000, 2.000 ] },
+        "754": { "location": [ 2.000, 2.000, 2.000 ] },
+        "787": { "location": [ 2.000, 2.000, 2.000 ] },
+        "801": { "location": [ 2.000, 2.000, 2.000 ] },
+        "903": { "location": [ 2.000, 2.000, 2.000 ] },
+        "905": { "location": [ 2.000, 2.000, 2.000 ] },
+        "906": { "location": [ 2.000, 2.000, 2.000 ] },
+        "913": { "location": [ 2.000, 2.000, 2.000 ] },
+        "929": { "location": [ 2.000, 2.000, 2.000 ] },
+        "931": { "location": [ 2.000, 2.000, 2.000 ] },
+        "975": { "location": [ 2.000, 2.000, 2.000 ] },
+        "989": { "location": [ 2.000, 2.000, 2.000 ] },
+        "991": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1002": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1011": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1017": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1018": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1035": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1053": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1055": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1079": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1091": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1098": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1099": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1150": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1152": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1172": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1175": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1184": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1186": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1198": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1214": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1224": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1269": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1270": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1327": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1356": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1381": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1382": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1461": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1463": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1492": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1498": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1507": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1511": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1552": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1553": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1601": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1645": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1646": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1651": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1653": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1667": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1672": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1694": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1718": { "location": [ -2.000, -2.000, -2.000 ] },
+        "1755": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1756": { "location": [ 0.445, -2.000, -2.000 ] },
+        "1765": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1805": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1809": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1824": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1842": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1867": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1900": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1902": { "location": [ 2.000, 2.000, 2.000 ] },
+        "1904": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2009": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2023": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2058": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2065": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2091": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2104": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2177": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2185": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2186": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2189": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2191": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2208": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2210": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2214": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2215": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2226": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2227": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2230": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2231": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2245": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2249": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2251": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2252": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2256": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2258": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2261": { "location": [ -2.000, -2.000, -2.000 ] },
+        "2266": { "location": [ -2.000, -1.249, -2.000 ] },
+        "2270": { "location": [ -2.000, -1.759, -2.000 ] },
+        "2277": { "location": [ 2.000, 1.745, 2.000 ] },
+        "2278": { "location": [ -0.076, 1.631, 1.775 ] },
+        "2282": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2284": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2286": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2288": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2290": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2292": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2294": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2295": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2303": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2310": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2325": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2349": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2351": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2355": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2357": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2389": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2392": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2394": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2396": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2413": { "location": [ 2.000, 2.000, 2.000 ] },
+        "2415": { "location": [ 2.000, 2.000, 2.000 ] }
+    }
+});
+
+               $d.resizable({
+                   aspectRatio: 600 / 400,
+                   resize: function (evt, ui) {
+                       $d.igraph.renderer.setSize(ui.size.width,
+                                                  ui.size.height);
+                   }
+               });
+           });
+           </script>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     </div>
   </div>

@@ -73,9 +73,10 @@ def draw(graph, options, physics=False, limit=100):
     # Setting physics = True makes the nodes bounce around when you touch them!
     query = """
     MATCH n
+    WITH n, RAND() AS random
+    ORDER BY random LIMIT {limit}
     OPTIONAL MATCH (n)-[r]->(m)
-    RETURN n, r, m 
-    LIMIT {limit}
+    RETURN n, r, m
     """
 
     data = graph.cypher.execute(query, limit=limit)

@@ -1,0 +1,51 @@
+
+    <html>
+    <head>
+      <script type="text/javascript" src="../lib/vis/dist/vis.js"></script>
+      <link href="../lib/vis/dist/vis.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+    <div id="9fff199f-e815-4aab-838e-b66d342e59e8"></div>
+
+    <script type="text/javascript">
+      var nodes = [{"group": 6, "id": "nlp", "label": "nlp"}, {"group": 1, "id": "intersysconsult", "label": "intersysconsult"}, {"group": 0, "id": "datadaytexas", "label": "datadaytexas"}, {"group": 5, "id": "kafka", "label": "kafka"}, {"group": 2, "id": "analytics", "label": "analytics"}, {"group": 0, "id": "technology", "label": "technology"}, {"group": 4, "id": "cassandra", "label": "cassandra"}, {"group": 5, "id": "hdfs", "label": "hdfs"}, {"group": 2, "id": "bigdata", "label": "bigdata"}, {"group": 0, "id": "opensource", "label": "opensource"}, {"group": 0, "id": "storm", "label": "storm"}, {"group": 0, "id": "geekaustin", "label": "geekaustin"}, {"group": 2, "id": "iot", "label": "iot"}, {"group": 3, "id": "timeseries", "label": "timeseries"}, {"group": 5, "id": "apache", "label": "apache"}, {"group": 1, "id": "rstats", "label": "rstats"}, {"group": 0, "id": "spark", "label": "spark"}, {"group": 2, "id": "data", "label": "data"}, {"group": 0, "id": "ibm", "label": "ibm"}, {"group": 1, "id": "lisp", "label": "lisp"}, {"group": 3, "id": "anomaly", "label": "anomaly"}, {"group": 4, "id": "elasticsearch", "label": "elasticsearch"}, {"group": 0, "id": "austin", "label": "austin"}, {"group": 6, "id": "sparkforthewin", "label": "sparkforthewin"}];
+      var edges = [{"to": "rstats", "from": "datadaytexas"}, {"to": "geekaustin", "from": "datadaytexas"}, {"to": "datadaytexas", "from": "austin"}, {"to": "lisp", "from": "intersysconsult"}, {"to": "data", "from": "bigdata"}, {"to": "timeseries", "from": "anomaly"}, {"to": "storm", "from": "spark"}, {"to": "data", "from": "analytics"}, {"to": "opensource", "from": "datadaytexas"}, {"to": "spark", "from": "datadaytexas"}, {"to": "technology", "from": "datadaytexas"}, {"to": "ibm", "from": "datadaytexas"}, {"to": "spark", "from": "geekaustin"}, {"to": "elasticsearch", "from": "cassandra"}, {"to": "opensource", "from": "geekaustin"}, {"to": "ibm", "from": "geekaustin"}, {"to": "opensource", "from": "ibm"}, {"to": "kafka", "from": "apache"}, {"to": "iot", "from": "bigdata"}, {"to": "spark", "from": "ibm"}, {"to": "sparkforthewin", "from": "nlp"}, {"to": "geekaustin", "from": "austin"}, {"to": "rstats", "from": "intersysconsult"}, {"to": "kafka", "from": "hdfs"}, {"to": "bigdata", "from": "analytics"}, {"to": "rstats", "from": "lisp"}, {"to": "spark", "from": "opensource"}];
+
+      var container = document.getElementById("9fff199f-e815-4aab-838e-b66d342e59e8");
+      
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      
+      var options = {
+          nodes: {
+              shape: 'dot',
+              size: 25,
+              font: {
+                  size: 14
+              }
+          },
+          edges: {
+              font: {
+                  size: 14,
+                  align: 'middle'
+              },
+              color: 'gray',
+              arrows: {
+                  to: {enabled: true, scaleFactor: 0.5}
+              },
+              smooth: {enabled: false}
+          },
+          physics: {
+              enabled: true
+          }
+      };
+      
+      var network = new vis.Network(container, data, options);
+
+    </script>
+    </body>
+    </html>
+    

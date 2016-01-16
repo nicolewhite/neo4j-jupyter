@@ -1,10 +1,41 @@
+
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
-<title>hello-world</title>
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>twitter slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<!-- General and theme style sheets -->
+<link rel="stylesheet" href="reveal.js/css/reveal.css">
+<link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme">
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+}
+
+</script>
+
+<!--[if lt IE 9]>
+<script src="reveal.js/lib/js/html5shiv.js"></script>
+<![endif]-->
+
+<!-- Get Font-awesome from cdn -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
 
 <style type="text/css">
     /*!
@@ -114,34 +145,2039 @@
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-body {
-  overflow: visible;
-  padding: 8px;
+html {
+  overflow-y: auto;
 }
-
-div#notebook {
-  overflow: visible;
-  border-top: none;
+.reveal {
+  font-size: 160%;
 }
-
-@media print {
-  div.cell {
-    display: block;
-    page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
-  }
-  div.output { 
-    display: block;
-    page-break-inside: avoid; 
-  }
+.reveal pre {
+  width: inherit;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.reveal pre code {
+  padding: 0px;
+}
+.reveal section img {
+  border: 0px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.reveal i {
+  font-style: normal;
+  font-family: FontAwesome;
+  font-size: 2em;
+}
+.reveal .slides {
+  text-align: left;
+}
+.reveal.fade {
+  opacity: 1;
+}
+.reveal .progress {
+  position: static;
+}
+div.input_area {
+  padding: 0.06em;
+}
+div.code_cell {
+  background-color: transparent;
+}
+div.prompt {
+  width: 11ex;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  text-align: right;
+}
+div.output_area pre {
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+}
+div.output_prompt {
+  /* 5px right shift to account for margin in parent container */
+  margin: 5px 5px 0 0;
+}
+.rendered_html p {
+  text-align: inherit;
 }
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
+
+</head>
+
+<body>
+<div class="reveal">
+<div class="slides">
+<section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Example-Project">Example Project<a class="anchor-link" href="#Example-Project">&#182;</a></h1><p>We're going to import Twitter data into Neo4j and then do various analysis on top of this dataset including plotting, graph algorithms, and graph visualizations.</p>
+<ul>
+<li>Import</li>
+<li>Plotting / Charting</li>
+<li>Graph Algorithms</li>
+<li>Graph Visualization</li>
+</ul>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Import">Import<a class="anchor-link" href="#Import">&#182;</a></h1><p>The script for importing data from Twitter's API is in <a href="https://github.com/nicolewhite/neo4j-jupyter/blob/master/scripts/twitter.py"><code>scripts/twitter.py</code></a>. This was used to upload tweets that contained either the words "ddtx16" or "datadaytexas" to Neo4j.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="2">
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Packages">Packages<a class="anchor-link" href="#Packages">&#182;</a></h2>
+</div>
+</div>
+</div>
+    </div><div class="fragment" data-fragment-index="3">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">Relationship</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Uniqueness-Constraints">Uniqueness Constraints<a class="anchor-link" href="#Uniqueness-Constraints">&#182;</a></h2><p>Neo4j supports uniqueness constraints on given label, property pairs.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="5">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+
+<span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;CREATE CONSTRAINT ON (u:User) ASSERT u.username IS UNIQUE&quot;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;CREATE CONSTRAINT ON (t:Tweet) ASSERT t.id IS UNIQUE&quot;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;CREATE CONSTRAINT ON (h:Hashtag) ASSERT h.name IS UNIQUE&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Twitter-API">Twitter API<a class="anchor-link" href="#Twitter-API">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="7">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">TWITTER_BEARER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;TWITTER_BEARER&quot;</span><span class="p">]</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">Authorization</span><span class="o">=</span><span class="s">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">TWITTER_BEARER</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">count</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">result_type</span><span class="o">=</span><span class="s">&quot;recent&quot;</span><span class="p">,</span>
+    <span class="n">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">,</span>
+    <span class="n">q</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="s">&quot;https://api.twitter.com/1.1/search/tweets.json?&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Find-Tweets">Find Tweets<a class="anchor-link" href="#Find-Tweets">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="9">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">find_tweets</span><span class="p">(</span><span class="n">since_id</span><span class="p">):</span>
+    <span class="n">payload</span><span class="p">[</span><span class="s">&quot;since_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">since_id</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="s">&quot;q={q}&amp;count={count}&amp;result_type={result_type}&amp;lang={lang}&amp;since_id={since_id}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">payload</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">tweets</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&quot;statuses&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">tweets</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Upload-Tweets-to-Neo4j">Upload Tweets to Neo4j<a class="anchor-link" href="#Upload-Tweets-to-Neo4j">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="11">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">upload_tweets</span><span class="p">(</span><span class="n">tweets</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="s">&quot;user&quot;</span><span class="p">]</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="s">&quot;entities&quot;</span><span class="p">]</span>
+
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">merge_one</span><span class="p">(</span><span class="s">&quot;Tweet&quot;</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span>
+        <span class="n">tweet</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="s">&quot;text&quot;</span><span class="p">]</span>
+        <span class="n">tweet</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">merge_one</span><span class="p">(</span><span class="s">&quot;User&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="s">&quot;screen_name&quot;</span><span class="p">])</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">create_unique</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;POSTS&quot;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;hashtags&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">hashtag</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">merge_one</span><span class="p">(</span><span class="s">&quot;Hashtag&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="s">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">create_unique</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">hashtag</span><span class="p">,</span> <span class="s">&quot;TAGS&quot;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;user_mentions&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">mention</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">merge_one</span><span class="p">(</span><span class="s">&quot;User&quot;</span><span class="p">,</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">[</span><span class="s">&quot;screen_name&quot;</span><span class="p">])</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">create_unique</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">tweet</span><span class="p">,</span> <span class="s">&quot;MENTIONS&quot;</span><span class="p">,</span> <span class="n">mention</span><span class="p">))</span>
+
+        <span class="n">reply</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;in_reply_to_status_id&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">reply</span><span class="p">:</span>
+            <span class="n">reply_tweet</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">merge_one</span><span class="p">(</span><span class="s">&quot;Tweet&quot;</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">reply</span><span class="p">)</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">create_unique</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">tweet</span><span class="p">,</span> <span class="s">&quot;REPLY_TO&quot;</span><span class="p">,</span> <span class="n">reply_tweet</span><span class="p">))</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;retweeted_status&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="n">retweet</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">merge_one</span><span class="p">(</span><span class="s">&quot;Tweet&quot;</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">create_unique</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">tweet</span><span class="p">,</span> <span class="s">&quot;RETWEETS&quot;</span><span class="p">,</span> <span class="n">retweet</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Run-It!">Run It!<a class="anchor-link" href="#Run-It!">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="13">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tweets</span> <span class="o">=</span> <span class="n">find_tweets</span><span class="p">(</span><span class="n">since_id</span><span class="o">=</span><span class="n">since_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tweets</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;No tweets found.&quot;</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">since_id</span> <span class="o">=</span> <span class="n">tweets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+        <span class="n">upload_tweets</span><span class="p">(</span><span class="n">tweets</span><span class="p">)</span>
+
+        <span class="k">print</span> <span class="s">&quot;{} tweets uploaded!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tweets</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">e</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="k">continue</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div><div class="fragment" data-fragment-index="13">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visualize-the-Model">Visualize the Model<a class="anchor-link" href="#Visualize-the-Model">&#182;</a></h2>
+</div>
+</div>
+</div>
+        </div><div class="fragment" data-fragment-index="15">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">scripts.vis</span> <span class="kn">import</span> <span class="n">draw</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;User&quot;</span><span class="p">:</span> <span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;Hashtag&quot;</span><span class="p">:</span> <span class="s">&quot;name&quot;</span><span class="p">}</span>
+
+<span class="n">draw</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">physics</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="100%"
+            height="400"
+            src="figure/graph-49945f8e-0177-4806-869e-b0f42dace1d2.html"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Plotting">Plotting<a class="anchor-link" href="#Plotting">&#182;</a></h1><p>Let's gather some basic insights by creating <code>plotly</code> charts.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="17">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">load_ext</span> cypher
+<span class="kn">import</span> <span class="nn">plotly.plotly</span> <span class="kn">as</span> <span class="nn">py</span>
+<span class="kn">from</span> <span class="nn">plotly.graph_objs</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="What-are-the-top-hashtags?">What are the top hashtags?<a class="anchor-link" href="#What-are-the-top-hashtags?">&#182;</a></h1><p>Find hashtags ordered by the number of tweets they've tagged.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="19">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">result</span> <span class="o">=</span> <span class="o">%</span><span class="k">cypher</span> MATCH (hashtag:Hashtag)-[:TAGS]-&gt;(tweet:Tweet)         \
+                 <span class="n">WHERE</span> <span class="n">hashtag</span><span class="o">.</span><span class="n">name</span> <span class="o">&lt;&gt;</span> <span class="s">&#39;ddtx16&#39;</span>                         \
+                 <span class="n">RETURN</span> <span class="n">hashtag</span><span class="o">.</span><span class="n">name</span> <span class="n">AS</span> <span class="n">hashtag</span><span class="p">,</span> <span class="n">COUNT</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span> <span class="n">AS</span> <span class="n">tweets</span> \
+                 <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">tweets</span> <span class="n">DESC</span> <span class="n">LIMIT</span> <span class="mi">5</span>
+        
+<span class="n">df</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>5 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hashtag</th>
+      <th>tweets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>datadaytexas</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>spark</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>storm</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>nlproc</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>technology</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">([</span><span class="n">Bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;hashtag&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;tweets&quot;</span><span class="p">])])</span>
+
+<span class="n">py</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ishow</span><span class="p">({</span><span class="s">&#39;data&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAAH0CAYAAADfWf7fAAAgAElEQVR4Xu3de7xlZV0/8Ic7MQyj
+8sMQSyelHMYxByUVoYgKLEIlwBsZKUIKDgMExCAMRlbEIBgygqQ0ZoT8FEUhKPDWxTtCQ3JREOGn
+MV4Q5OYkBMPv9d0vz2nmMLPPXof9XWev57z3P6Wu/ZxnvT9rPeuz117nzEaPPfbYY8WLAAECBAgQ
+IECAQKUCGym8lSZrtwgQIECAAAECBHoCCq8DgQABAgQIECBAoGoBhbfqeO0cAQIECBAgQICAwusY
+IECAAAECBAgQqFpA4a06XjtHgAABAgQIECCg8DoGCBAgQIAAAQIEqhZQeKuO184RIECAAAECBAgo
+vI4BAgQIECBAgACBqgUU3qrjtXMECBAgQIAAAQIKr2OAAAECBAgQIECgagGFt+p47RwBAgQIECBA
+gIDC6xggQIAAAQIECBCoWkDhrTpeO0eAAAECBAgQIKDwOgYIECBAgAABAgSqFlB4q47XzhEgQIAA
+AQIECCi8jgECBAgQIECAAIGqBRTequO1cwQIECBAgAABAgqvY4AAAQIECBAgQKBqAYW36njtHAEC
+BAgQIECAgMLrGCBAgAABAgQIEKhaQOGtOl47R4AAAQIECBAgoPA6BggQIECAAAECBKoWUHirjtfO
+ESBAgAABAgQIKLyOAQIECBAgQIAAgaoFFN6q47VzBAgQIECAAAECCq9jgAABAgQIECBAoGoBhbfq
+eO0cAQIECBAgQICAwusYIECAAAECBAgQqFpA4a06XjtHgAABAgQIECCg8DoGCBAgQIAAAQIEqhZQ
+eKuO184RIECAAAECBAgovI4BAgQIECBAgACBqgUU3qrjtXMECBAgQIAAAQIKr2OAAAECBAgQIECg
+agGFt+p47RwBAgQIECBAgIDC6xggQIAAAQIECBCoWkDhrTpeO0eAAAECBAgQIKDwOgYIECBAgAAB
+AgSqFlB4q47XzhEgQIAAAQIECCi8jgECBAgQIECAAIGqBRTequO1cwQIECBAgAABAgqvY4AAAQIE
+CBAgQKBqAYW36njtHAECBAgQIECAgMLrGCBAgAABAgQIEKhaQOGtOl47R4AAAQIECBAgoPA6BggQ
+IECAAAECBKoWUHirjtfOESBAgAABAgQIKLyOAQIECBAgQIAAgaoFFN6q47VzBAgQIECAAAECCq9j
+gAABAgQIECBAoGoBhbfqeO0cAQIECBAgQICAwusYIECAAAECBAgQqFpA4a06XjtHgAABAgQIECCg
+8DoGCBAgQIAAAQIEqhZQeKuO184RIECAAAECBAgovI4BAgQIECBAgACBqgUU3qrjtXMECBAgQIAA
+AQIKr2OAAAECBAgQIECgagGFt+p47RwBAgQIECBAgIDC6xggQIAAAQIECBCoWkDhrTpeO0eAAAEC
+BAgQIKDwOgYIECBAgAABAgSqFlB4q47XzhEgQIAAAQIECCi8jgECBAgQIECAAIGqBRTequO1cwQI
+ECBAgAABAgqvY4AAAQIECBAgQKBqAYW36njtHAECBAgQIECAgMLrGCBAgAABAgQIEKhaQOGtOl47
+R4AAAQIECBAgoPA6BggQIECAAAECBKoWUHirjtfOESBAgAABAgQIKLyOAQIECBAgQIAAgaoFFN6q
+47VzBAgQIECAAAECCq9jgAABAgQIECBAoGoBhbfqeO0cAQIECBAgQICAwusYIECAAAECBAgQqFpA
+4a06XjtHgAABAgQIECCg8DoGCBAgQIAAAQIEqhZQeKuO184RIECAAAECBAgovI4BAgQIECBAgACB
+qgUU3qrjtXMECBAgQIAAAQIKr2OAAAECBAgQIECgagGFt+p47RwBAgQIECBAgIDC6xggQIAAAQIE
+CBCoWkDhrTpeO0eAAAECBAgQIKDwOgYIECBAgAABAgSqFlB4q47XzhEgQIAAAQIECCi8jgECBAgQ
+IECAAIGqBRTequO1cwQIECBAgAABAgqvY4AAAQIECBAgQKBqAYW36njtHAECBAgQIECAgMLrGCBA
+gAABAgQIEKhaQOGtOl47R4AAAQIECBAgoPA6BggQIECAAAECBKoWUHirjtfOESBAgAABAgQIKLyO
+AQIECBAgQIAAgaoFFN6q47VzBAgQIECAAAECCq9jgAABAgQIECBAoGoBhbfqeO0cAQIECBAgQICA
+wusYIECAAAECBAgQqFpA4a06XjtHgAABAgQIECCg8DoGCBAgQIAAAQIEqhZQeKuO184RIECAAAEC
+BAgovI4BAgQIECBAgACBqgUU3qrjtXMECBAgQIAAAQIKr2OAAAECBAgQIECgagGFt+p47RwBAgQI
+ECBAgIDC6xggQIAAAQIECBCoWkDhrTpeO0eAAAECBAgQIKDwOgYIECBAgAABAgSqFlB4q47XzhEg
+QIAAAQIECCi8jgECBAgQIECAAIGqBRTequO1cwQIECBAgAABAgqvY4AAAQIECBAgQKBqAYW36njt
+HAECBAgQIECAgMLb0jHwtTvvKy8/53Mt/bSZ9WMuP3L38rynz5lZO21vCRAgQIAAgYEFFN6BqZ7Y
+hgrvE/Pr926FN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQI
+ECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiF
+N8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbel
+FBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBA
+oAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/WyAQIECBAoAYBhbelFBXePGiFN8/W
+yAQIECBAoAYBhfenKd55551l6dKlZd999y3777//Otleeuml5fLLLy8PP/xw2WOPPcphhx3WOHuF
+tzHZwG9QeAemsiEBAgQIEJiRAgpvKWXlypVl+fLlZe7cuWX+/PnrFN5LLrmkXH/99eW4444rc+bM
+mfJBovBOmW7SNyq8kxLZgAABAgQIzGgBhbeUcscdd5RZs2aVK6+8ssyePXu88K5Zs6YcfPDB5dxz
+zy3bbLPNeg+U1atXD3QA3fjdB8qr3vfVgba1UTOBjxy2S3nu02Y3e5OtCRAgQIBAhwS22mqrDs12
+9Kaq8K6VyYoVK3p3ccceabj99tvLGWecUXbeeedy7bXXli233LIceuihZcGCBePveuihhwZK9YZV
+95cDzv/KQNvaqJnAR9/8orJgh/V/IGk2kq0JECBAgMBoCmyxxRajObGOzErh7VN4r7nmmnLqqaeW
+JUuWlN13373ceuut5ZRTTilRjKP8Nnl5pKGJVrNtPdLQzMvWBAgQIEBgpgkovH0K73XXXVcuvvji
+smzZsvGtjj/++HLIIYeUnXbaqdGxovA24mq0scLbiMvGBAgQIEBgxgkovH0K76pVq8pJJ53Uu6M7
+9jr66KPLokWLyo477tjoYFF4G3E12ljhbcRlYwIECBAgMOMEFN4+hTf+p2OOOabstddeZZ999ik3
+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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="What's-the-hashtag-and-mention-count-distribution?">What's the hashtag and mention count distribution?<a class="anchor-link" href="#What's-the-hashtag-and-mention-count-distribution?">&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="22">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">result</span> <span class="o">=</span> <span class="o">%</span><span class="k">cypher</span> MATCH (tweet:Tweet)                                   \
+                 <span class="n">RETURN</span> <span class="n">tweet</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>                                      \
+                        <span class="n">SIZE</span><span class="p">((:</span><span class="n">Hashtag</span><span class="p">)</span><span class="o">-</span><span class="p">[:</span><span class="n">TAGS</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">(</span><span class="n">tweet</span><span class="p">))</span> <span class="n">AS</span> <span class="n">hashtags</span><span class="p">,</span> \
+                        <span class="n">SIZE</span><span class="p">((</span><span class="n">tweet</span><span class="p">)</span><span class="o">-</span><span class="p">[:</span><span class="n">MENTIONS</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">(:</span><span class="n">User</span><span class="p">))</span> <span class="n">AS</span> <span class="n">mentions</span>
+            
+<span class="n">df</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s">&quot;tweet.id&quot;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>325 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hashtags</th>
+      <th>mentions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">hashtags</span> <span class="o">=</span> <span class="n">Histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;hashtags&quot;</span><span class="p">],</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Hashtags&quot;</span><span class="p">)</span>
+<span class="n">mentions</span> <span class="o">=</span> <span class="n">Histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">&quot;mentions&quot;</span><span class="p">],</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Mentions&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">([</span><span class="n">hashtags</span><span class="p">,</span> <span class="n">mentions</span><span class="p">])</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">barmode</span><span class="o">=</span><span class="s">&quot;overlay&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+
+<span class="n">py</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ishow</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAAH0CAYAAADfWf7fAAAgAElEQVR4Xu3dC9BV1X03/h8aNYaL
+ShSJmRCL7UDwNSEVo2kap9FpxhhrLCJqJJGEqAW5eAEFb8V4KQKR4AU08UKRoDZvS6P10mSsbZwQ
+o2/R6J8UIiF2jDZFpWqMiUbgP2vT5wkKPs/Z5zz7OWfv89kzmdqHvdZZ67N+B74s1tmnz5YtW7aE
+iwABAgQIECBAgEBFBfoIvBVdWdMiQIAAAQIECBDIBARehUCAAAECBAgQIFBpAYG30strcgQIECBA
+gAABAgKvGiBAgAABAgQIEKi0gMBb6eU1OQIECBAgQIAAAYFXDRAgQIAAAQIECFRaQOCt9PKaHAEC
+BAgQIECAgMCrBggQIECAAAECBCotIPBWenlNjgABAgQIECBAQOBVAwQIECBAgAABApUWEHgrvbwm
+R4AAAQIECBAgIPCqAQIECBAgQIAAgUoLCLyVXl6TI0CAAAECBAgQEHjVAAECBAgQIECAQKUFBN5K
+L6/JESBAgAABAgQICLxqgAABAgQIECBAoNICAm+ll9fkCBAgQIAAAQIEBF41QIAAAQIECBAgUGkB
+gbfSy2tyBAgQIECAAAECAq8aIECAAAECBAgQqLSAwFvp5TU5AgQIECBAgAABgVcNECBAgAABAgQI
+VFpA4K308pocAQIECBAgQICAwKsGCBAgQIAAAQIEKi0g8FZ6eU2OAAECBAgQIEBA4FUDBAgQIECA
+AAEClRYQeCu9vCZHgAABAgQIECAg8KoBAgQIECBAgACBSgsIvJVeXpMjQIAAAQIECBAQeNUAAQIE
+CBAgQIBApQUE3kovr8kRIECAAAECBAgIvGqAAAECBAgQIECg0gICb6WX1+QIECBAgAABAgQEXjVA
+gAABAgQIECBQaQGBt9LLa3IECBAgQIAAAQICrxogQIAAAQIECBCotIDAW+nlNTkCBAgQIECAAAGB
+Vw0QIECAAAECBAhUWkDgrfTymhwBAgQIECBAgIDAqwYIECBAgAABAgQqLSDwVnp5TY4AAQIECBAg
+QEDgVQMECBAgQIAAAQKVFhB4K728JkeAAAECBAgQICDwqgECBAgQIECAAIFKCwi8lV5ekyNAgAAB
+AgQIEBB41QABAgQIECBAgEClBQTeSi+vyREgQIAAAQIECAi8aoAAAQIECBAgQKDSAgJvpZfX5AgQ
+IECAAAECBAReNUCAAAECBAgQIFBpAYG30strcgQIECBAgAABAgKvGiBAgAABAgQIEKi0gMBb6eU1
+OQIECBAgQIAAAYFXDRAgQIAAAQIECFRaQOCt9PKaHAECBAgQIECAgMCrBggQIECAAAECBCotIPBW
+enlNjgABAgQIECBAQOBVAwQIECBAgAABApUWEHgrvbwmR4AAAQIECBAgIPCqAQIECBAgQIAAgUoL
+CLyVXl6TI0CAAAECBAgQEHjVAAECBAgQIECAQKUFBN5KL6/JESBAgAABAgQICLxqgAABAgQIECBA
+oNICAm+ll9fkCBAgQIAAAQIEBF41QIAAAQIECBAgUGkBgbfSy2tyBAgQIECAAAECAq8aIECAAAEC
+BAgQqLSAwFvp5TU5AgQIECBAgAABgVcNECBAgAABAgQIVFpA4K308pocAQIECBAgQICAwKsGCBAg
+QIAAAQIEKi0g8FZ6eU2OAAECBAgQIEBA4FUDBAgQIECAAAEClRYQeCu9vCZHgAABAgQIECAg8KoB
+AgQIECBAgACBSgsIvJVeXpMjQIAAAQIECBAQeNUAAQIECBAgQIBApQUE3kovr8kRIECAAAECBAgI
+vGqAAAECBAgQIECg0gICb6WX1+QIECBAgAABAgQEXjVAgAABAgQIECBQaQGBt9LLa3IECBAgQIAA
+AQICrxogQIAAAQIECBCotIDAW+nlNTkCBAgQIECAAAGBVw0QIECAAAECBAhUWkDgrfTymhwBAgQI
+ECBAgIDAqwYIECBAgAABAgQqLSDwVnp5TY4AAQIECBAgQEDgVQMECBAgQIAAAQKVFhB4K728JkeA
+AAECBAgQICDwqgECBAgQIECAAIFKCwi8lV5ekyNAgAABAgQIEBB41QABAgQIECBAgEClBQTeSi+v
+yREgQIAAAQIECAi8aoAAAQIECBAgQKDSAgJvpZfX5AgQIECAAAECBAReNUCAAAECBAgQIFBpAYG3
+0strcgQIECBAgAABAgKvGiBAgAABAgQIEKi0gMBb6eU1OQIECBAgQIAAAYFXDRAgQIAAAQIECFRa
+QOCt9PKaHAECBAgQIECAgMCrBggQIECAAAECBCotIPBWenlNjgABAgQIECBAQOBVAwQIECBAgAAB
+ApUWEHgrvbwmR4AAAQIECBAgIPCqAQIECBAgQIBAgQJvbNocdz3+bK5XOHbk+2PXnXfK1cbN7ywg
+8KoOAgQIECBAgEDBAid94+Fcr3DH6Yflur/om2fNmhUnnXRSfOQjHyn6pQrpX+AthFWnBAgQIECA
+AIHfC/Rm4D3ttNPiwgsvjP33379zAD/4wQ/iu9/9blx66aV1LUtXgfd3v/tdPPbYY/Gxj32srr57
+o5HA2xvKXoMAAQIECBBoa4EqB95HHnkkfvSjH8WUKVNado0F3pZdGgMjQIAAAQIEqiLQaoH3+uuv
+jxRU33zzzRg+fHikHdx3vetd8cQTT8QNN9wQv/71r6NPnz4xadKkbOc2/fpBBx0UDz74YPZrf/AH
+f5D97Pnnn4/LLrssXnnllRg0aFCccMIJ8alPfSreqf+XXnop5s2bF6+99lqsX78+0u7wn/7pn8b5
+558f11xzTfz4xz+ON954I/7wD/8wvvrVr/bY8gu8PUapIwIECBAgQIDAjgVaLfCuXr06C7rpOvfc
+c2P06NFx+OGHZwH3vPPOy45DvPrqq9mv9+vXLwu3KYhefvnl8e53vzvmz58f73vf+2LcuHFx3333
+xbp1696yw/tO/acgnNql13v66afjyiuvjG984xvx8MMPx/e+9724+OKLs9f85S9/GYMHD+6xchJ4
+e4xSRwQIECBAgACB1gi8GzZsyHZoO660k3vwwQfv8AzvLbfcEgMGDIgxY8ZkATT99xe+8IXYY489
+OtunwPvpT386271NV9rpTccYZs6cucPAu63Ctv2nndzx48fHhz70oeyWz33uc/Gd73wnC7+XXHJJ
+nH322fHRj360x8tI4O1xUh0SIECAAAECBN4q0Eo7vK+//np861vfip/+9KdZKH7uuefimGOOyY4j
+/Pa3v41vf/vbcf/998dhhx0WX/nKV2L33XfPdnhPPPHEGDlyZDax73//+/HQQw9lH457+w5vV/0v
+WrQoC9KnnHJK/Md//EfceOON8fWvfz3rM+0KL1u2LF588cU4/fTTY9SoUT1WRgJvj1Hq6O0Ced/c
+7SbYao+caTd/8yVAgEBvCuT9M7GRPyO6e0pDOkLwm9/8JiZPnhw777xzFjoHDhyYBd6OK52tvfba
+a7PjDCl8vv0pDV0F3q76/9WvfhVnnHFGvP/978+C74QJE7IjDtteTz31VFxwwQWRdob79+/fI8sk
+8PYIo052JJD3zd1uio38ZtZuVuZLgACBsgvk/TOxkT8jugu8c+fOjQ9+8IPZjm3aTT3nnHM6d3h/
+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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Graph-Algorithms">Graph Algorithms<a class="anchor-link" href="#Graph-Algorithms">&#182;</a></h1><p>The typical workflow consists of retrieving a subgraph from Neo4j via Cypher and analyzing this graph in <code>igraph</code>.</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="A-subgraph-of-users-mentioning-other-users">A subgraph of users mentioning other users<a class="anchor-link" href="#A-subgraph-of-users-mentioning-other-users">&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="26">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">igraph</span> <span class="kn">import</span> <span class="n">Graph</span> <span class="k">as</span> <span class="n">IGraph</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">MATCH (user1:User)-[:POSTS]-&gt;(tweet:Tweet)-[:RETWEETS]-&gt;(retweet:Tweet),</span>
+<span class="s">      (user2:User)-[:POSTS]-&gt;(retweet)</span>
+<span class="s">RETURN user1.username, user2.username, COUNT(*) AS weight</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+<span class="n">ig</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">TupleList</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ig</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;igraph.Graph at 0x10ec13af8&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Which-users-have-the-highest-betweenness?">Which users have the highest betweenness?<a class="anchor-link" href="#Which-users-have-the-highest-betweenness?">&#182;</a></h1><p>$betweenness(v) = \sum_{s, t \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}$</p>
+<p>The betweenness centrality of a node $v$ is the number of shortest paths that pass through $v$, $\sigma_{st}(v)$,  divided by the total number of shortest paths, $\sigma_{st}$.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="28">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">between</span> <span class="o">=</span> <span class="p">[(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">],</span> <span class="n">node</span><span class="o">.</span><span class="n">betweenness</span><span class="p">())</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">ig</span><span class="o">.</span><span class="n">vs</span><span class="p">]</span>
+<span class="n">top</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">between</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">top</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(u&apos;strataconf&apos;, 1836.2690476190478),
+ (u&apos;CaseySoftware&apos;, 1754.9095238095242),
+ (u&apos;aterrel&apos;, 1182.5761904761905),
+ (u&apos;datanerd_jaya&apos;, 1006.3857142857144),
+ (u&apos;DataDayTexas&apos;, 982.9880952380954)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div><div class="fragment" data-fragment-index="28">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="A-subgraph-of-hashtags-mutually-tagging-tweets">A subgraph of hashtags mutually tagging tweets<a class="anchor-link" href="#A-subgraph-of-hashtags-mutually-tagging-tweets">&#182;</a></h1>
+</div>
+</div>
+</div>
+        </div><div class="fragment" data-fragment-index="30">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># query = &quot;&quot;&quot;</span>
+<span class="c"># MATCH (h1:Hashtag)-[:TAGS]-&gt;(tweet:Tweet)&lt;-[:TAGS]-(h2:Hashtag)</span>
+<span class="c"># WHERE NOT (tweet)-[:RETWEETS|REPLY_TO]-&gt;() AND h1.name &lt; h2.name AND</span>
+<span class="c">#       NOT &#39;ddtx16&#39; in [h1.name, h2.name]</span>
+<span class="c"># RETURN h1.name, h2.name, COUNT(*) AS weight</span>
+<span class="c"># &quot;&quot;&quot;</span>
+
+<span class="c"># data = graph.cypher.execute(query)</span>
+
+<span class="c"># data</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div><div class="fragment" data-fragment-index="31">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># ig = IGraph.TupleList(data, weights=True)</span>
+<span class="c"># ig</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Community-detection">Community detection<a class="anchor-link" href="#Community-detection">&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="33">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">clusters</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">community_walktrap</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s">&quot;weight&quot;</span><span class="p">)</span>
+<span class="n">clusters</span> <span class="o">=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">as_clustering</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[44]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>16</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div><div class="fragment" data-fragment-index="34">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">ig</span><span class="o">.</span><span class="n">vs</span><span class="p">]</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;label&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
+<span class="n">nodes</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[45]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&apos;id&apos;: u&apos;marksgorman&apos;, &apos;label&apos;: u&apos;marksgorman&apos;},
+ {&apos;id&apos;: u&apos;venkatesh_cr&apos;, &apos;label&apos;: u&apos;venkatesh_cr&apos;},
+ {&apos;id&apos;: u&apos;hadleywickham&apos;, &apos;label&apos;: u&apos;hadleywickham&apos;},
+ {&apos;id&apos;: u&apos;JMayData&apos;, &apos;label&apos;: u&apos;JMayData&apos;},
+ {&apos;id&apos;: u&apos;datanerd_jaya&apos;, &apos;label&apos;: u&apos;datanerd_jaya&apos;}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">vs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">node</span><span class="p">[</span><span class="s">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">membership</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    
+<span class="n">nodes</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[46]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&apos;group&apos;: 0, &apos;id&apos;: u&apos;marksgorman&apos;, &apos;label&apos;: u&apos;marksgorman&apos;},
+ {&apos;group&apos;: 1, &apos;id&apos;: u&apos;venkatesh_cr&apos;, &apos;label&apos;: u&apos;venkatesh_cr&apos;},
+ {&apos;group&apos;: 2, &apos;id&apos;: u&apos;hadleywickham&apos;, &apos;label&apos;: u&apos;hadleywickham&apos;},
+ {&apos;group&apos;: 2, &apos;id&apos;: u&apos;JMayData&apos;, &apos;label&apos;: u&apos;JMayData&apos;},
+ {&apos;group&apos;: 1, &apos;id&apos;: u&apos;datanerd_jaya&apos;, &apos;label&apos;: u&apos;datanerd_jaya&apos;}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div><div class="fragment" data-fragment-index="36">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">edges</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;from&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;to&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="n">edges</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[47]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&apos;from&apos;: u&apos;marksgorman&apos;, &apos;to&apos;: u&apos;venkatesh_cr&apos;},
+ {&apos;from&apos;: u&apos;hadleywickham&apos;, &apos;to&apos;: u&apos;JMayData&apos;},
+ {&apos;from&apos;: u&apos;datanerd_jaya&apos;, &apos;to&apos;: u&apos;ramhiser&apos;},
+ {&apos;from&apos;: u&apos;Chuparkoff&apos;, &apos;to&apos;: u&apos;RobertsPaige&apos;},
+ {&apos;from&apos;: u&apos;Ellen_Friedman&apos;, &apos;to&apos;: u&apos;OReillyMedia&apos;}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">scripts.vis</span> <span class="kn">import</span> <span class="n">vis_network</span>
+<span class="n">vis_network</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">physics</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[48]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="100%"
+            height="400"
+            src="figure/graph-c070b262-2548-44df-ade9-253510ad29af.html"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div><div style=display:none>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="en" dir="ltr">Learning <a href="https://twitter.com/neo4j">@neo4j</a> &#39;s <a href="https://twitter.com/hashtag/Cypher?src=hash">#Cypher</a>. Yes Yet Another Query language but damn it&#39;s fast and pretty! <a href="https://twitter.com/hashtag/Win?src=hash">#Win</a></p>&mdash; Gregory Vangilbergen (@GregVang) <a href="https://twitter.com/GregVang/status/646288351969021952">September 22, 2015</a></blockquote></p>
+<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+</div>
+</div>
+</div>
+    </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Retweets-and-replies-structure">Retweets and replies structure<a class="anchor-link" href="#Retweets-and-replies-structure">&#182;</a></h1><p>Let's visualize (in 3D!) the structure of users retweeting and replying to other users.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="40">
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">jgraph</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">MATCH (user1:User)-[:POSTS]-&gt;(:Tweet)-[:RETWEETS|REPLY_TO]-&gt;(:Tweet)&lt;-[:POSTS]-(user2:User)</span>
+<span class="s">RETURN ID(user1), ID(user2)</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">tup</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+<span class="n">jgraph</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="graph-a6040e41-fa46-44a0-b899-30b6ce77ef9f"></div>
+           <script type="text/javascript">
+           require.config({baseUrl: '/',
+                             paths: {jgraph: ['nbextensions/jgraph.min', 'https://rawgit.com/patrickfuller/jgraph/master/js/build/jgraph.min']}});
+           require(['jgraph'], function () {
+               var $d = $('#graph-a6040e41-fa46-44a0-b899-30b6ce77ef9f');
+               $d.width(600); $d.height(400);
+               $d.jgraph = jQuery.extend({}, jgraph);
+               $d.jgraph.create($d, {nodeSize: 2.000000,
+                                     edgeSize: 0.250000,
+                                     defaultNodeColor: '0x5bc0de',
+                                     defaultEdgeColor: '0xaaaaaa',
+                                     shader: 'basic',
+                                     z: 100,
+                                     runOptimization: true,
+                                     directed: true,
+                                     showSave: false});
+               $d.jgraph.draw({
+    "edges": [
+        { "source": 177, "target": 1 },
+        { "source": 4, "target": 3 },
+        { "source": 172, "target": 3 },
+        { "source": 163, "target": 3 },
+        { "source": 149, "target": 3 },
+        { "source": 369, "target": 9 },
+        { "source": 261, "target": 9 },
+        { "source": 237, "target": 9 },
+        { "source": 21, "target": 9 },
+        { "source": 8, "target": 9 },
+        { "source": 531, "target": 16 },
+        { "source": 269, "target": 23 },
+        { "source": 290, "target": 23 },
+        { "source": 277, "target": 23 },
+        { "source": 127, "target": 23 },
+        { "source": 23, "target": 27 },
+        { "source": 14, "target": 27 },
+        { "source": 34, "target": 27 },
+        { "source": 319, "target": 27 },
+        { "source": 206, "target": 27 },
+        { "source": 149, "target": 27 },
+        { "source": 539, "target": 29 },
+        { "source": 32, "target": 29 },
+        { "source": 363, "target": 29 },
+        { "source": 539, "target": 29 },
+        { "source": 277, "target": 29 },
+        { "source": 277, "target": 29 },
+        { "source": 118, "target": 37 },
+        { "source": 43, "target": 44 },
+        { "source": 380, "target": 44 },
+        { "source": 50, "target": 52 },
+        { "source": 44, "target": 57 },
+        { "source": 556, "target": 57 },
+        { "source": 435, "target": 57 },
+        { "source": 438, "target": 57 },
+        { "source": 44, "target": 57 },
+        { "source": 576, "target": 65 },
+        { "source": 416, "target": 65 },
+        { "source": 47, "target": 78 },
+        { "source": 149, "target": 82 },
+        { "source": 380, "target": 83 },
+        { "source": 29, "target": 83 },
+        { "source": 82, "target": 83 },
+        { "source": 363, "target": 104 },
+        { "source": 386, "target": 104 },
+        { "source": 177, "target": 104 },
+        { "source": 107, "target": 104 },
+        { "source": 103, "target": 104 },
+        { "source": 576, "target": 107 },
+        { "source": 586, "target": 107 },
+        { "source": 89, "target": 107 },
+        { "source": 542, "target": 107 },
+        { "source": 16, "target": 107 },
+        { "source": 143, "target": 107 },
+        { "source": 475, "target": 107 },
+        { "source": 528, "target": 107 },
+        { "source": 509, "target": 107 },
+        { "source": 308, "target": 107 },
+        { "source": 507, "target": 107 },
+        { "source": 452, "target": 107 },
+        { "source": 450, "target": 107 },
+        { "source": 429, "target": 107 },
+        { "source": 414, "target": 107 },
+        { "source": 131, "target": 107 },
+        { "source": 406, "target": 107 },
+        { "source": 374, "target": 107 },
+        { "source": 222, "target": 118 },
+        { "source": 44, "target": 118 },
+        { "source": 44, "target": 124 },
+        { "source": 565, "target": 124 },
+        { "source": 576, "target": 130 },
+        { "source": 131, "target": 130 },
+        { "source": 89, "target": 135 },
+        { "source": 165, "target": 135 },
+        { "source": 131, "target": 135 },
+        { "source": 138, "target": 135 },
+        { "source": 134, "target": 135 },
+        { "source": 65, "target": 143 },
+        { "source": 65, "target": 144 },
+        { "source": 299, "target": 144 },
+        { "source": 329, "target": 144 },
+        { "source": 44, "target": 144 },
+        { "source": 177, "target": 144 },
+        { "source": 282, "target": 149 },
+        { "source": 277, "target": 149 },
+        { "source": 204, "target": 149 },
+        { "source": 277, "target": 149 },
+        { "source": 353, "target": 149 },
+        { "source": 424, "target": 149 },
+        { "source": 393, "target": 149 },
+        { "source": 331, "target": 149 },
+        { "source": 277, "target": 149 },
+        { "source": 135, "target": 174 },
+        { "source": 614, "target": 177 },
+        { "source": 374, "target": 177 },
+        { "source": 374, "target": 177 },
+        { "source": 349, "target": 177 },
+        { "source": 192, "target": 177 },
+        { "source": 192, "target": 177 },
+        { "source": 16, "target": 177 },
+        { "source": 107, "target": 177 },
+        { "source": 304, "target": 185 },
+        { "source": 488, "target": 185 },
+        { "source": 343, "target": 185 },
+        { "source": 304, "target": 185 },
+        { "source": 118, "target": 199 },
+        { "source": 435, "target": 199 },
+        { "source": 277, "target": 199 },
+        { "source": 277, "target": 199 },
+        { "source": 277, "target": 199 },
+        { "source": 393, "target": 199 },
+        { "source": 636, "target": 269 },
+        { "source": 380, "target": 269 },
+        { "source": 503, "target": 269 },
+        { "source": 424, "target": 269 },
+        { "source": 351, "target": 269 },
+        { "source": 343, "target": 269 },
+        { "source": 29, "target": 269 },
+        { "source": 539, "target": 292 },
+        { "source": 539, "target": 292 },
+        { "source": 539, "target": 292 },
+        { "source": 576, "target": 308 },
+        { "source": 118, "target": 308 },
+        { "source": 82, "target": 327 },
+        { "source": 206, "target": 340 },
+        { "source": 341, "target": 361 },
+        { "source": 380, "target": 361 },
+        { "source": 83, "target": 380 },
+        { "source": 447, "target": 426 },
+        { "source": 442, "target": 426 },
+        { "source": 610, "target": 426 },
+        { "source": 582, "target": 426 },
+        { "source": 206, "target": 426 },
+        { "source": 514, "target": 426 },
+        { "source": 447, "target": 426 },
+        { "source": 432, "target": 426 },
+        { "source": 447, "target": 426 },
+        { "source": 442, "target": 426 },
+        { "source": 380, "target": 426 },
+        { "source": 438, "target": 439 },
+        { "source": 478, "target": 478 },
+        { "source": 44, "target": 478 },
+        { "source": 206, "target": 478 },
+        { "source": 52, "target": 478 },
+        { "source": 511, "target": 478 },
+        { "source": 50, "target": 478 }
+    ],
+    "nodes": {
+        "1": { "location": [ -2.000, -2.000, -2.000 ] },
+        "3": { "location": [ -2.000, -2.000, -2.000 ] },
+        "4": { "location": [ -2.000, -2.000, -2.000 ] },
+        "8": { "location": [ -2.000, -2.000, -2.000 ] },
+        "9": { "location": [ -2.000, -2.000, -2.000 ] },
+        "14": { "location": [ -2.000, -2.000, -2.000 ] },
+        "16": { "location": [ -2.000, -2.000, -2.000 ] },
+        "21": { "location": [ -2.000, -2.000, -2.000 ] },
+        "23": { "location": [ -2.000, -2.000, -2.000 ] },
+        "27": { "location": [ 2.000, 2.000, 2.000 ] },
+        "29": { "location": [ -2.000, -2.000, -2.000 ] },
+        "32": { "location": [ -2.000, -2.000, -2.000 ] },
+        "34": { "location": [ -2.000, -2.000, -2.000 ] },
+        "37": { "location": [ -2.000, -2.000, -2.000 ] },
+        "43": { "location": [ -2.000, -2.000, -2.000 ] },
+        "44": { "location": [ -2.000, -2.000, -2.000 ] },
+        "47": { "location": [ -2.000, -2.000, -2.000 ] },
+        "50": { "location": [ -2.000, -2.000, -2.000 ] },
+        "52": { "location": [ -2.000, -2.000, -2.000 ] },
+        "57": { "location": [ -2.000, -2.000, -2.000 ] },
+        "65": { "location": [ -2.000, -2.000, -2.000 ] },
+        "78": { "location": [ -2.000, -2.000, -2.000 ] },
+        "82": { "location": [ -2.000, -2.000, -2.000 ] },
+        "83": { "location": [ -2.000, -2.000, -2.000 ] },
+        "89": { "location": [ -2.000, -2.000, -2.000 ] },
+        "103": { "location": [ -2.000, -2.000, -2.000 ] },
+        "104": { "location": [ -2.000, -2.000, -2.000 ] },
+        "107": { "location": [ -2.000, -2.000, -2.000 ] },
+        "118": { "location": [ -2.000, -2.000, -2.000 ] },
+        "124": { "location": [ -2.000, -2.000, -2.000 ] },
+        "127": { "location": [ -2.000, -2.000, -2.000 ] },
+        "130": { "location": [ -2.000, -2.000, -2.000 ] },
+        "131": { "location": [ -2.000, -2.000, -2.000 ] },
+        "134": { "location": [ -2.000, -2.000, -2.000 ] },
+        "135": { "location": [ -2.000, -2.000, -2.000 ] },
+        "138": { "location": [ -2.000, -2.000, -2.000 ] },
+        "143": { "location": [ -2.000, -2.000, -2.000 ] },
+        "144": { "location": [ -2.000, -2.000, -2.000 ] },
+        "149": { "location": [ -2.000, -2.000, -2.000 ] },
+        "163": { "location": [ -2.000, -2.000, -2.000 ] },
+        "165": { "location": [ -2.000, -2.000, -2.000 ] },
+        "172": { "location": [ -2.000, -2.000, -2.000 ] },
+        "174": { "location": [ -2.000, -2.000, -2.000 ] },
+        "177": { "location": [ -1.225, -1.799, -1.938 ] },
+        "185": { "location": [ -0.146, -0.161, 1.145 ] },
+        "192": { "location": [ -1.775, -0.541, -1.774 ] },
+        "199": { "location": [ 0.778, 2.000, 1.152 ] },
+        "204": { "location": [ 2.000, 2.000, 2.000 ] },
+        "206": { "location": [ 1.623, 2.000, 2.000 ] },
+        "222": { "location": [ 2.000, 2.000, 2.000 ] },
+        "237": { "location": [ 2.000, 2.000, 2.000 ] },
+        "261": { "location": [ 2.000, 2.000, 2.000 ] },
+        "269": { "location": [ 2.000, 2.000, 2.000 ] },
+        "277": { "location": [ 2.000, 2.000, 2.000 ] },
+        "282": { "location": [ 2.000, 2.000, 2.000 ] },
+        "290": { "location": [ 2.000, 2.000, 2.000 ] },
+        "292": { "location": [ 2.000, 2.000, 2.000 ] },
+        "299": { "location": [ 2.000, 2.000, 2.000 ] },
+        "304": { "location": [ 2.000, 2.000, 2.000 ] },
+        "308": { "location": [ 2.000, 2.000, 2.000 ] },
+        "319": { "location": [ 2.000, 2.000, 2.000 ] },
+        "327": { "location": [ 2.000, 2.000, 2.000 ] },
+        "329": { "location": [ 2.000, 2.000, 2.000 ] },
+        "331": { "location": [ 2.000, 2.000, 2.000 ] },
+        "340": { "location": [ 2.000, 2.000, 2.000 ] },
+        "341": { "location": [ 2.000, 2.000, 2.000 ] },
+        "343": { "location": [ 2.000, 2.000, 2.000 ] },
+        "349": { "location": [ 2.000, 2.000, 2.000 ] },
+        "351": { "location": [ 2.000, 2.000, 2.000 ] },
+        "353": { "location": [ 2.000, 2.000, 2.000 ] },
+        "361": { "location": [ 2.000, 2.000, 2.000 ] },
+        "363": { "location": [ 2.000, 2.000, 2.000 ] },
+        "369": { "location": [ 2.000, 2.000, 2.000 ] },
+        "374": { "location": [ 2.000, 2.000, 2.000 ] },
+        "380": { "location": [ 2.000, 2.000, 2.000 ] },
+        "386": { "location": [ 2.000, 2.000, 2.000 ] },
+        "393": { "location": [ 2.000, 2.000, 2.000 ] },
+        "406": { "location": [ 2.000, 2.000, 2.000 ] },
+        "414": { "location": [ 2.000, 2.000, 2.000 ] },
+        "416": { "location": [ 2.000, 2.000, 2.000 ] },
+        "424": { "location": [ 2.000, 2.000, 2.000 ] },
+        "426": { "location": [ 2.000, 2.000, 2.000 ] },
+        "429": { "location": [ 2.000, 2.000, 2.000 ] },
+        "432": { "location": [ 2.000, 2.000, 2.000 ] },
+        "435": { "location": [ 2.000, 2.000, 2.000 ] },
+        "438": { "location": [ 2.000, 2.000, 2.000 ] },
+        "439": { "location": [ 2.000, 2.000, 2.000 ] },
+        "442": { "location": [ 2.000, 2.000, 2.000 ] },
+        "447": { "location": [ 2.000, 2.000, 2.000 ] },
+        "450": { "location": [ 2.000, 2.000, 2.000 ] },
+        "452": { "location": [ 2.000, 2.000, 2.000 ] },
+        "475": { "location": [ 2.000, 2.000, 2.000 ] },
+        "478": { "location": [ 2.000, 2.000, 2.000 ] },
+        "488": { "location": [ 2.000, 2.000, 2.000 ] },
+        "503": { "location": [ 2.000, 2.000, 2.000 ] },
+        "507": { "location": [ 2.000, 2.000, 2.000 ] },
+        "509": { "location": [ 2.000, 2.000, 2.000 ] },
+        "511": { "location": [ 2.000, 2.000, 2.000 ] },
+        "514": { "location": [ -2.000, -2.000, -2.000 ] },
+        "528": { "location": [ -2.000, -2.000, -2.000 ] },
+        "531": { "location": [ -2.000, -2.000, -2.000 ] },
+        "539": { "location": [ -2.000, -2.000, -2.000 ] },
+        "542": { "location": [ -2.000, -2.000, -2.000 ] },
+        "556": { "location": [ 2.000, 2.000, 2.000 ] },
+        "565": { "location": [ -2.000, -2.000, -2.000 ] },
+        "576": { "location": [ -2.000, -2.000, -2.000 ] },
+        "582": { "location": [ -2.000, -2.000, -2.000 ] },
+        "586": { "location": [ -2.000, -2.000, -2.000 ] },
+        "610": { "location": [ -2.000, -2.000, -2.000 ] },
+        "614": { "location": [ -2.000, -2.000, -2.000 ] },
+        "636": { "location": [ 2.000, 2.000, 2.000 ] }
+    }
+});
+
+               $d.resizable({
+                   aspectRatio: 600 / 400,
+                   resize: function (evt, ui) {
+                       $d.jgraph.renderer.setSize(ui.size.width,
+                                                  ui.size.height);
+                   }
+               });
+           });
+           </script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div></section>
+    </section>
+</div>
+</div>
+
+<script src="reveal.js/lib/js/head.min.js"></script>
+
+<script src="reveal.js/js/reveal.js"></script>
+
+<script>
+
+// Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: "reveal.js/lib/js/classList.js", condition: function() { return !document.body.classList; } },
+{ src: "reveal.js/plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; } }
+]
+});
+</script>
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
@@ -164,1159 +2200,15 @@ div#notebook {
         }
     });
     </script>
-    <!-- End of mathjax configuration --></head>
-<body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Hello-World">Hello World<a class="anchor-link" href="#Hello-World">&#182;</a></h1><p>This notebook walks through basic code examples for integrating various packages with Neo4j, including <code>py2neo</code>, <code>ipython-cypher</code>, <code>pandas</code>, <code>networkx</code>, <code>igraph</code>, and <code>graph3d</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="py2neo">py2neo<a class="anchor-link" href="#py2neo">&#182;</a></h1><p><code>py2neo</code> is one of Neo4j's Python drivers. It offers a fully-featured interface for interacting with your data in Neo4j. Install <code>py2neo</code> with <code>pip install py2neo</code>.</p>
-<h2 id="Connect">Connect<a class="anchor-link" href="#Connect">&#182;</a></h2><p>Connect to Neo4j with the <code>Graph</code> class.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">Graph</span>
-<span class="kn">from</span> <span class="nn">scripts.vis</span> <span class="kn">import</span> <span class="n">draw</span>
-
-<span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">graph</span><span class="o">.</span><span class="n">delete_all</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Nodes">Nodes<a class="anchor-link" href="#Nodes">&#182;</a></h2><p>Create nodes with the <code>Node</code> class. The first argument is the node's label. The remaining arguments are an arbitrary amount of node properties or key-value pairs.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">Node</span>
-
-<span class="n">nicole</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;Person&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Nicole&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
-<span class="n">drew</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;Person&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Drew&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="n">mtdew</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;Drink&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Mountain Dew&quot;</span><span class="p">,</span> <span class="n">calories</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
-<span class="n">cokezero</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;Drink&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Coke Zero&quot;</span><span class="p">,</span> <span class="n">calories</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="n">coke</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;Manufacturer&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Coca Cola&quot;</span><span class="p">)</span>
-<span class="n">pepsi</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;Manufacturer&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Pepsi&quot;</span><span class="p">)</span>
-
-<span class="n">graph</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">nicole</span><span class="p">,</span> <span class="n">drew</span><span class="p">,</span> <span class="n">mtdew</span><span class="p">,</span> <span class="n">cokezero</span><span class="p">,</span> <span class="n">coke</span><span class="p">,</span> <span class="n">pepsi</span><span class="p">)</span>
-
-<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;Person&quot;</span><span class="p">:</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Drink&quot;</span><span class="p">:</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;Manufacturer&quot;</span><span class="p">:</span> <span class="s">&quot;name&quot;</span><span class="p">}</span>
-
-<span class="n">draw</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-
-        <iframe
-            width="100%"
-            height="400"
-            src="figure/graph-1232834e-3dbd-47e4-810a-07b8bb48d072.html"
-            frameborder="0"
-            allowfullscreen
-        ></iframe>
-        
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>P.S. - If you want to check out what's going on behind the scenes for the <code>draw()</code> function used above, take a look at <a href="https://github.com/nicolewhite/neo4j-jupyter/blob/master/scripts/vis.py"><code>scripts/vis.py</code></a>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Relationships">Relationships<a class="anchor-link" href="#Relationships">&#182;</a></h2><p>Create relationships between nodes with the <code>Relationship</code> class.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">Relationship</span>
-
-<span class="n">graph</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">nicole</span><span class="p">,</span> <span class="s">&quot;LIKES&quot;</span><span class="p">,</span> <span class="n">cokezero</span><span class="p">))</span>
-<span class="n">graph</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">nicole</span><span class="p">,</span> <span class="s">&quot;LIKES&quot;</span><span class="p">,</span> <span class="n">mtdew</span><span class="p">))</span>
-<span class="n">graph</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">drew</span><span class="p">,</span> <span class="s">&quot;LIKES&quot;</span><span class="p">,</span> <span class="n">mtdew</span><span class="p">))</span>
-<span class="n">graph</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">coke</span><span class="p">,</span> <span class="s">&quot;MAKES&quot;</span><span class="p">,</span> <span class="n">cokezero</span><span class="p">))</span>
-<span class="n">graph</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Relationship</span><span class="p">(</span><span class="n">pepsi</span><span class="p">,</span> <span class="s">&quot;MAKES&quot;</span><span class="p">,</span> <span class="n">mtdew</span><span class="p">))</span>
-
-<span class="n">draw</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-
-        <iframe
-            width="100%"
-            height="400"
-            src="figure/graph-97db0d29-e22f-40d6-a75b-8cea9d0afbe7.html"
-            frameborder="0"
-            allowfullscreen
-        ></iframe>
-        
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Cypher">Cypher<a class="anchor-link" href="#Cypher">&#182;</a></h2><p>Retrieve Cypher query results with <code>Graph.cypher.execute</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">MATCH (person:Person)-[:LIKES]-&gt;(drink:Drink)</span>
-<span class="s">RETURN person.name AS name, drink.name AS drink</span>
-<span class="s">&quot;&quot;&quot;</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-
-<span class="n">data</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>   | name   | drink       
----+--------+--------------
- 1 | Nicole | Mountain Dew
- 2 | Nicole | Coke Zero   
- 3 | Drew   | Mountain Dew</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Rows can be accessed by index.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre> name   | drink       
---------+--------------
- Nicole | Mountain Dew</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Columns can be accessed by key or attribute.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;{0} likes to drink {1}.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">drink</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Nicole likes to drink Mountain Dew.
-Nicole likes to drink Coke Zero.
-Drew likes to drink Mountain Dew.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Parameterized-Cypher">Parameterized Cypher<a class="anchor-link" href="#Parameterized-Cypher">&#182;</a></h2><p>Pass parameters to Cypher queries by passing additional key-value arguments to <code>Graph.cypher.execute.</code> Parameters in Cypher are named and are wrapped in curly braces.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">MATCH (p:Person)-[:LIKES]-&gt;(drink:Drink)</span>
-<span class="s">WHERE p.name = {name}</span>
-<span class="s">RETURN p.name AS name, AVG(drink.calories) AS avg_calories</span>
-<span class="s">&quot;&quot;&quot;</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Nicole&quot;</span><span class="p">)</span>
-
-<span class="n">data</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>   | name   | avg_calories
----+--------+--------------
- 1 | Nicole |       4500.0</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="ipython-cypher">ipython-cypher<a class="anchor-link" href="#ipython-cypher">&#182;</a></h1><p><code>ipython-cypher</code> exposes <code>%cypher</code> magic in Jupyter. Install <code>ipython-cypher</code> with <code>pip install ipython-cypher</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">load_ext</span> cypher
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Cypher">Cypher<a class="anchor-link" href="#Cypher">&#182;</a></h2><p><code>%cypher</code> is intended for one-line Cypher queries and <code>%%cypher</code> is intended for multi-line Cypher queries. Placing <code>%%cypher</code> above a Cypher query will display that query's results.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">cypher</span>
-MATCH (person:Person)-[:LIKES]-&gt;(drink:Drink)
-RETURN person.name, drink.name, drink.calories
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>3 rows affected.
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<table>
-    <tr>
-        <th>person.name</th>
-        <th>drink.name</th>
-        <th>drink.calories</th>
-    </tr>
-    <tr>
-        <td>Nicole</td>
-        <td>Mountain Dew</td>
-        <td>9000</td>
-    </tr>
-    <tr>
-        <td>Nicole</td>
-        <td>Coke Zero</td>
-        <td>0</td>
-    </tr>
-    <tr>
-        <td>Drew</td>
-        <td>Mountain Dew</td>
-        <td>9000</td>
-    </tr>
-</table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Pandas-Data-Frames">Pandas Data Frames<a class="anchor-link" href="#Pandas-Data-Frames">&#182;</a></h2><p>Cypher query results can be coerced to <code>pandas</code> data frames with the <code>get_dataframe</code> method. To assign Cypher query results to a variable, you need to use <code>%cypher</code> and separate lines with \. You'll first need to install <code>pandas</code> with <code>pip install pandas</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">results</span> <span class="o">=</span> <span class="o">%</span><span class="k">cypher</span> MATCH (person:Person)-[:LIKES]-&gt;(drink:Drink) \
-                  <span class="n">RETURN</span> <span class="n">person</span><span class="o">.</span><span class="n">name</span> <span class="n">AS</span> <span class="n">name</span><span class="p">,</span> <span class="n">drink</span><span class="o">.</span><span class="n">name</span> <span class="n">AS</span> <span class="n">drink</span>
-    
-<span class="n">df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span>
-
-<span class="n">df</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>3 rows affected.
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>name</th>
-      <th>drink</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Nicole</td>
-      <td>Mountain Dew</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Nicole</td>
-      <td>Coke Zero</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Drew</td>
-      <td>Mountain Dew</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">df</span><span class="o">.</span><span class="n">index</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>Int64Index([0, 1, 2], dtype=&apos;int64&apos;)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">]]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>name</th>
-      <th>drink</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Nicole</td>
-      <td>Coke Zero</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">df</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0    Nicole
-1    Nicole
-2      Drew
-Name: name, dtype: object</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="NetworkX-Graphs">NetworkX Graphs<a class="anchor-link" href="#NetworkX-Graphs">&#182;</a></h1><p>Cypher query results can be coerced to <code>NetworkX</code> MultiDiGraphs, graphs that permit multiple edges between nodes, with the <code>get_graph</code> method. You'll first need to install <code>NetworkX</code> with <code>pip install networkx</code>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">networkx</span> <span class="kn">as</span> <span class="nn">nx</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-
-<span class="n">results</span> <span class="o">=</span> <span class="o">%</span><span class="k">cypher</span> MATCH p = (:Person)-[:LIKES]-&gt;(:Drink) RETURN p
-
-<span class="n">g</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span>
-
-<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>3 rows affected.
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt"></div>
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-lJycrAkTJuixxx6TpydrAbgfChiAEQcPHtTdd9+thg0b6rXXXlNYWJjpSIBd8WcnACNatWql9957
-T127dlVkZKTee+8905EAu2IFDMC4d999V/fee6/GjRun//mf/5GXl5fpSECdo4ABOIQjR45o+PDh
-8vLy0qJFi3TttdeajgTUKbagATiEZs2aacOGDYqLi1NUVJTWrVtnOhJQp1gBA3A4Gzdu1IgRI3TP
-Pfdo8uTJqlevnulIgM1RwAAc0vHjxzVixAj99NNPysrK0nXXXWc6EmBTbEEDcEhNmjTRO++8ozvu
-uEPR0dFauXKl6UiATbECBuDw3n//fd19992666679Mwzz8jHx8d0JKDWWAEDcHh9+vRRfn6+9u/f
-r9jYWH399demIwG1RgEDcAqhoaFavny5hg8frp49e+rNN980HQmoFbagATidHTt2yGKxaNCgQfr3
-v/+t+vXrm44EVBsrYABOp3v37srPz9fx48fVq1cv7d2713QkoNooYABOKTg4WEuWLFFKSor69Omj
-119/3XQkoFrYggbg9Hbt2qWEhATFxsZqxowZCggIMB0JuCJWwACcXrdu3ZSXl6eysjL16NFDBQUF
-piMBV0QBA3AJgYGBWrhwoR5//HH169dPGRkZYoMPjowtaAAuZ/fu3bJYLOratavmzp2rBg0amI4E
-VMEKGIDL6dSpkz788EMFBAQoKipK+fn5piMBVVDAAFySv7+/5s2bp8mTJ+vWW2/V7Nmz2ZKGQ2EL
-GoDL27dvnywWi9q0aaOMjAw1bNjQdCSAFTAA19euXTtt27ZNzZs3V0REhD788EPTkQBWwADcS25u
-rlJSUpSamqpHH31Unp6sQ2AGBQzA7XzzzTeyWq1q3LixFixYoMaNG5uOBDfEn34A3E7r1q21ZcsW
-derUSREREdqyZYvpSHBDrIABuLXVq1dr9OjReuihhzRx4kR5eXmZjgQ3QQEDcHuHDx/W8OHD5evr
-q8zMTDVt2tR0JLgBtqABuL0WLVpo48aNiomJUWRkpNavX286EtwAK2AAuMCGDRs0cuRIjR49Wv/4
-xz9Ur14905HgoihgAPidY8eOKSkpSaWlpVq8eLFatGhhOhJcEFvQAPA711xzjdasWaOBAwcqOjpa
-b7/9tulIcEGsgAHgMrZs2aLExERZLBZNnTpV3t7epiPBRbACBoDLiIuL086dO7Vnzx7FxcXpm2++
-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
-v7Sen/BbfCcAAAAASUVORK5CYII=
-"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(u&apos;19&apos;, {u&apos;calories&apos;: 9000, &apos;labels&apos;: [u&apos;Drink&apos;], u&apos;name&apos;: u&apos;Mountain Dew&apos;}),
- (u&apos;18&apos;, {u&apos;age&apos;: 20, &apos;labels&apos;: [u&apos;Person&apos;], u&apos;name&apos;: u&apos;Drew&apos;}),
- (u&apos;20&apos;, {u&apos;calories&apos;: 0, &apos;labels&apos;: [u&apos;Drink&apos;], u&apos;name&apos;: u&apos;Coke Zero&apos;}),
- (u&apos;6&apos;, {u&apos;age&apos;: 24, &apos;labels&apos;: [u&apos;Person&apos;], u&apos;name&apos;: u&apos;Nicole&apos;})]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">nx</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{u&apos;18&apos;: 1, u&apos;19&apos;: 2, u&apos;20&apos;: 1, u&apos;6&apos;: 2}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="igraph">igraph<a class="anchor-link" href="#igraph">&#182;</a></h1><p>Cypher query results can be imported into <code>igraph</code> with <code>py2neo</code>. You'll need to install <code>igraph</code> with <code>pip install python-igraph</code>. Query results should be returned as edgelists, as <code>igraph</code> has a method for building an <code>igraph</code> object from a list of tuples representing edges between nodes.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">Graph</span> <span class="k">as</span> <span class="n">PGraph</span>
-<span class="kn">from</span> <span class="nn">igraph</span> <span class="kn">import</span> <span class="n">Graph</span> <span class="k">as</span> <span class="n">IGraph</span>
-
-<span class="n">neo4j</span> <span class="o">=</span> <span class="n">PGraph</span><span class="p">()</span>
-
-<span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">MATCH (person:Person)-[:LIKES]-&gt;(drink:Drink)</span>
-<span class="s">RETURN person.name, drink.name</span>
-<span class="s">&quot;&quot;&quot;</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">neo4j</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-<span class="n">data</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>   | person.name | drink.name  
----+-------------+--------------
- 1 | Nicole      | Mountain Dew
- 2 | Nicole      | Coke Zero   
- 3 | Drew        | Mountain Dew</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">ig</span> <span class="o">=</span> <span class="n">IGraph</span><span class="o">.</span><span class="n">TupleList</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="n">ig</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;igraph.Graph at 0x10fce7de0&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">best</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">vs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_degree</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">maxdegree</span><span class="p">())[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
-<span class="n">best</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[u&apos;Nicole&apos;, u&apos;Mountain Dew&apos;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="jgraph">jgraph<a class="anchor-link" href="#jgraph">&#182;</a></h2><p><code>jgraph</code> will plot tuple lists as 3D graphs.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">jgraph</span>
-
-<span class="n">jgraph</span><span class="o">.</span><span class="n">draw</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-
-<div class="output_html rendered_html output_subarea ">
-<div id="graph-07bb9cd9-0b22-49af-a4ff-a8ab7007f278"></div>
-           <script type="text/javascript">
-           require.config({baseUrl: '/',
-                             paths: {jgraph: ['nbextensions/jgraph.min', 'https://rawgit.com/patrickfuller/jgraph/master/js/build/jgraph.min']}});
-           require(['jgraph'], function () {
-               var $d = $('#graph-07bb9cd9-0b22-49af-a4ff-a8ab7007f278');
-               $d.width(600); $d.height(400);
-               $d.jgraph = jQuery.extend({}, jgraph);
-               $d.jgraph.create($d, {nodeSize: 2.000000,
-                                     edgeSize: 0.250000,
-                                     defaultNodeColor: '0x5bc0de',
-                                     defaultEdgeColor: '0xaaaaaa',
-                                     shader: 'basic',
-                                     z: 100,
-                                     runOptimization: true,
-                                     directed: true,
-                                     showSave: false});
-               $d.jgraph.draw({
-    "edges": [
-        { "source": 1, "target": 2 },
-        { "source": 2, "target": 3 },
-        { "source": 3, "target": 4 },
-        { "source": 4, "target": 1 },
-        { "source": 4, "target": 5 },
-        { "source": 5, "target": 2 }
-    ],
-    "nodes": {
-        "1": { "location": [ -2.000, -2.000, -2.000 ] },
-        "2": { "location": [ -0.903, -0.873, -1.232 ] },
-        "3": { "location": [ -0.105, 0.403, 0.199 ] },
-        "4": { "location": [ 1.233, 1.078, 0.955 ] },
-        "5": { "location": [ 2.000, 1.873, 2.000 ] }
-    }
+    <!-- End of mathjax configuration -->
+
+<script>
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  window.scrollTo(0,0);
+  MathJax.Hub.Rerender(event.currentSlide);
 });
+</script>
 
-               $d.resizable({
-                   aspectRatio: 600 / 400,
-                   resize: function (evt, ui) {
-                       $d.jgraph.renderer.setSize(ui.size.width,
-                                                  ui.size.height);
-                   }
-               });
-           });
-           </script>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We can visualize our Neo4j data by pulling out an edgelist with a Cypher query.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;MATCH (n)--&gt;(m) RETURN ID(n), ID(m)&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
-
-<span class="n">jgraph</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansired">---------------------------------------------------------------------------</span>
-<span class="ansired">NameError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-2-55885454d527&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">----&gt; 1</span><span class="ansired"> </span>data <span class="ansiblue">=</span> graph<span class="ansiblue">.</span>cypher<span class="ansiblue">.</span>execute<span class="ansiblue">(</span><span class="ansiblue">&quot;MATCH (n)--&gt;(m) RETURN ID(n), ID(m)&quot;</span><span class="ansiblue">)</span><span class="ansiblue"></span>
-<span class="ansigreen">      2</span> data <span class="ansiblue">=</span> <span class="ansiblue">[</span>tuple<span class="ansiblue">(</span>x<span class="ansiblue">)</span> <span class="ansigreen">for</span> x <span class="ansigreen">in</span> data<span class="ansiblue">]</span><span class="ansiblue"></span>
-<span class="ansigreen">      3</span> <span class="ansiblue"></span>
-<span class="ansigreen">      4</span> jgraph<span class="ansiblue">.</span>draw<span class="ansiblue">(</span>data<span class="ansiblue">)</span><span class="ansiblue"></span>
-
-<span class="ansired">NameError</span>: name &apos;graph&apos; is not defined</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    </div>
-  </div>
 </body>
+
 </html>

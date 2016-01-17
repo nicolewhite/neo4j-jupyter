@@ -232,7 +232,7 @@ $ ipython notebook workshop.ipynb</code></pre>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">MATCH (u:User)-[:POSTS]-(t:Tweet)</span>
+<span class="s">MATCH (u:User)-[:POSTS]-&gt;(t:Tweet)</span>
 <span class="s">WHERE u.screen_name = {name}</span>
 <span class="s">RETURN t.text </span>
 <span class="s">ORDER BY t.id DESC</span>

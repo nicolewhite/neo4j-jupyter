@@ -1,7 +1,5 @@
 slides:
-	jupyter nbconvert hello-world.ipynb twitter.ipynb --to slides
-	mv hello-world.slides.html build
-	mv twitter.slides.html build
+	jupyter nbconvert hello-world.ipynb twitter.ipynb --to slides --post serve
 	
 html:
 	jupyter nbconvert index.ipynb hello-world.ipynb twitter.ipynb

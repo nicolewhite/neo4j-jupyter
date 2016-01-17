@@ -1,0 +1,51 @@
+
+    <html>
+    <head>
+      <script type="text/javascript" src="../lib/vis/dist/vis.js"></script>
+      <link href="../lib/vis/dist/vis.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+    <div id="37ce489a-7c6a-42b2-9a21-b9a2e1812b2a"></div>
+
+    <script type="text/javascript">
+      var nodes = [{"title": "{'age': 20, 'name': 'Drew'}", "group": "Person", "id": "1", "label": "Drew"}, {"title": "{'calories': 9000, 'name': 'Mountain Dew'}", "group": "Drink", "id": "2", "label": "Mountain Dew"}, {"title": "{'age': 24, 'name': 'Nicole'}", "group": "Person", "id": "0", "label": "Nicole"}, {"title": "{'calories': 0, 'name': 'Coke Zero'}", "group": "Drink", "id": "3", "label": "Coke Zero"}, {"title": "{'name': 'Coca Cola'}", "group": "Manufacturer", "id": "4", "label": "Coca Cola"}, {"title": "{'name': 'Pepsi'}", "group": "Manufacturer", "id": "5", "label": "Pepsi"}];
+      var edges = [{"to": "2", "from": "1", "label": "LIKES"}, {"to": "2", "from": "0", "label": "LIKES"}, {"to": "3", "from": "0", "label": "LIKES"}, {"to": "3", "from": "4", "label": "MAKES"}, {"to": "2", "from": "5", "label": "MAKES"}];
+
+      var container = document.getElementById("37ce489a-7c6a-42b2-9a21-b9a2e1812b2a");
+      
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      
+      var options = {
+          nodes: {
+              shape: 'dot',
+              size: 25,
+              font: {
+                  size: 14
+              }
+          },
+          edges: {
+              font: {
+                  size: 14,
+                  align: 'middle'
+              },
+              color: 'gray',
+              arrows: {
+                  to: {enabled: true, scaleFactor: 0.5}
+              },
+              smooth: {enabled: false}
+          },
+          physics: {
+              enabled: false
+          }
+      };
+      
+      var network = new vis.Network(container, data, options);
+
+    </script>
+    </body>
+    </html>
+    

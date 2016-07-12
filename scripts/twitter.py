@@ -2,13 +2,13 @@ import os
 import sys
 import time
 import requests
-from py2neo import Graph, Relationship
+from py2neo import Graph, Node, Relationship
 
 graph = Graph()
 
-graph.cypher.execute("CREATE CONSTRAINT ON (u:User) ASSERT u.username IS UNIQUE")
-graph.cypher.execute("CREATE CONSTRAINT ON (t:Tweet) ASSERT t.id IS UNIQUE")
-graph.cypher.execute("CREATE CONSTRAINT ON (h:Hashtag) ASSERT h.name IS UNIQUE")
+graph.run("CREATE CONSTRAINT ON (u:User) ASSERT u.username IS UNIQUE")
+graph.run("CREATE CONSTRAINT ON (t:Tweet) ASSERT t.id IS UNIQUE")
+graph.run("CREATE CONSTRAINT ON (h:Hashtag) ASSERT h.name IS UNIQUE")
 
 TWITTER_BEARER = os.environ["TWITTER_BEARER"]
 
@@ -39,32 +39,39 @@ def upload_tweets(tweets):
         u = t["user"]
         e = t["entities"]
 
-        tweet = graph.merge_one("Tweet", "id", t["id"])
-        tweet.properties["text"] = t["text"]
+        tweet = Node("Tweet", id=t["id"])
+        graph.merge(tweet)
+        tweet["text"] = t["text"]
         tweet.push()
 
-        user = graph.merge_one("User", "username", u["screen_name"])
-        graph.create_unique(Relationship(user, "POSTS", tweet))
+        user = Node("User", username=u["screen_name"])
+        graph.merge(user)
+
+        graph.merge(Relationship(user, "POSTS", tweet))
 
         for h in e.get("hashtags", []):
-            hashtag = graph.merge_one("Hashtag", "name", h["text"].lower())
-            graph.create_unique(Relationship(hashtag, "TAGS", tweet))
+            hashtag = Node("Hashtag", name=h["text"].lower())
+            graph.merge(hashtag)
+            graph.merge(Relationship(hashtag, "TAGS", tweet))
 
         for m in e.get('user_mentions', []):
-            mention = graph.merge_one("User", "username", m["screen_name"])
-            graph.create_unique(Relationship(tweet, "MENTIONS", mention))
+            mention = Node("User", username=m["screen_name"])
+            graph.merge(mention)
+            graph.merge(Relationship(tweet, "MENTIONS", mention))
 
         reply = t.get("in_reply_to_status_id")
 
         if reply:
-            reply_tweet = graph.merge_one("Tweet", "id", reply)
-            graph.create_unique(Relationship(tweet, "REPLY_TO", reply_tweet))
+            reply_tweet = Node("Tweet", id=reply)
+            graph.merge(reply_tweet)
+            graph.merge(Relationship(tweet, "REPLY_TO", reply_tweet))
 
         ret = t.get("retweeted_status", {}).get("id")
 
         if ret:
-            retweet = graph.merge_one("Tweet", "id", ret)
-            graph.create_unique(Relationship(tweet, "RETWEETS", retweet))
+            retweet = Node("Tweet", id=ret)
+            graph.merge(retweet)
+            graph.merge(Relationship(tweet, "RETWEETS", retweet))
 
 
 since_id = -1
@@ -74,17 +81,17 @@ while True:
         tweets = find_tweets(since_id=since_id)
 
         if not tweets:
-            print "No tweets found."
+            print("No tweets found.")
             time.sleep(60)
             continue
 
         since_id = tweets[0].get("id")
         upload_tweets(tweets)
 
-        print "{} tweets uploaded!".format(len(tweets))
+        print("{} tweets uploaded!".format(len(tweets)))
         time.sleep(60)
 
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
         time.sleep(60)
         continue

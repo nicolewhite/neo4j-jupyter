@@ -1,0 +1,51 @@
+
+    <html>
+    <head>
+      <script type="text/javascript" src="../lib/vis/dist/vis.js"></script>
+      <link href="../lib/vis/dist/vis.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+    <div id="5808fa37-9f47-4a27-8014-0c4bcb369cbb"></div>
+
+    <script type="text/javascript">
+      var nodes = [{"id": "kuanhoong", "label": "kuanhoong", "group": 0}, {"id": "revodavid", "label": "revodavid", "group": 0}, {"id": "ozjimbob", "label": "ozjimbob", "group": 1}, {"id": "Rbloggers", "label": "Rbloggers", "group": 1}, {"id": "josefslerka", "label": "josefslerka", "group": 0}, {"id": "rodrig_padilla", "label": "rodrig_padilla", "group": 1}, {"id": "permutans", "label": "permutans", "group": 0}, {"id": "HoloMarkeD", "label": "HoloMarkeD", "group": 0}, {"id": "philmikejones", "label": "philmikejones", "group": 1}, {"id": "rodrigo82ok", "label": "rodrigo82ok", "group": 0}, {"id": "timelyportfolio", "label": "timelyportfolio", "group": 2}, {"id": "rmflight", "label": "rmflight", "group": 2}, {"id": "renato_umeton", "label": "renato_umeton", "group": 1}];
+      var edges = [];
+
+      var container = document.getElementById("5808fa37-9f47-4a27-8014-0c4bcb369cbb");
+
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+
+      var options = {
+          nodes: {
+              shape: 'dot',
+              size: 25,
+              font: {
+                  size: 14
+              }
+          },
+          edges: {
+              font: {
+                  size: 14,
+                  align: 'middle'
+              },
+              color: 'gray',
+              arrows: {
+                  to: {enabled: true, scaleFactor: 0.5}
+              },
+              smooth: {enabled: false}
+          },
+          physics: {
+              enabled: true
+          }
+      };
+
+      var network = new vis.Network(container, data, options);
+
+    </script>
+    </body>
+    </html>
+    

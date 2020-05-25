@@ -1,6 +1,7 @@
 from IPython.display import IFrame
 import json
 import uuid
+import py2neo.data
 
 def vis_network(nodes, edges, physics=False):
     html = """
@@ -10,20 +11,15 @@ def vis_network(nodes, edges, physics=False):
       <link href="../lib/vis/dist/vis.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-
     <div id="{id}"></div>
-
     <script type="text/javascript">
       var nodes = {nodes};
       var edges = {edges};
-
       var container = document.getElementById("{id}");
-
       var data = {{
         nodes: nodes,
         edges: edges
       }};
-
       var options = {{
           nodes: {{
               shape: 'dot',
@@ -47,9 +43,7 @@ def vis_network(nodes, edges, physics=False):
               enabled: {physics}
           }}
       }};
-
       var network = new vis.Network(container, data, options);
-
     </script>
     </body>
     </html>
@@ -90,19 +84,20 @@ def draw(graph, options, physics=False, limit=100):
     edges = []
 
     def get_vis_info(node, id):
-        node_label = list(node.labels())[0]
-        prop_key = options.get(node_label)
-        vis_label = node.properties.get(prop_key, "")
+        node_label = list(node.labels)[0]
+        prop_key = options[node_label]
+        prop_val = node[prop_key]
+        vis_label = node[prop_key]
 
-        return {"id": id, "label": vis_label, "group": node_label, "title": repr(node.properties)}
+        return {"id": id, "label": vis_label, "group": node_label, "title": repr(node)}
 
     for row in data:
+        #print(row)
         source_node = row[0]
         source_id = row[1]
         rel = row[2]
         target_node = row[3]
         target_id = row[4]
-
         source_info = get_vis_info(source_node, source_id)
 
         if source_info not in nodes:
@@ -110,10 +105,13 @@ def draw(graph, options, physics=False, limit=100):
 
         if rel is not None:
             target_info = get_vis_info(target_node, target_id)
+            rel_label=str(rel.relationships).split(':')
+            rel_label=rel_label[1].split('{')
+            rel_label=rel_label[0].strip(' ')
 
             if target_info not in nodes:
                 nodes.append(target_info)
-
-            edges.append({"from": source_info["id"], "to": target_info["id"], "label": rel.type()})
-
+    
+            edges.append({"from": source_info["id"], "to": target_info["id"], "label": rel_label})
+ 
     return vis_network(nodes, edges, physics=physics)
